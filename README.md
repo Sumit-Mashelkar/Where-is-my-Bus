@@ -1,2 +1,2 @@
-# Where-s-my-Bus
+# Where's-my-Bus
 A crowd sourced bus tracking  application 
