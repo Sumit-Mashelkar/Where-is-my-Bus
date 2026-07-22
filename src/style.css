@@ -1,23 +1,40 @@
 body{
-    background-color: linear-gradient(125deg, #012334, #883faf, #ffffff );
+    background-color: black;
     font-family: Arial, sans-serif;
-    color: #ffffff;
+    color: #000000;
     margin: 0;
     padding: 0;
 }
+
+.search-form{
+  padding: 30px;
+  background-color: rgb(3, 3, 3);
+
+input{
+  background-color: #8593d7;
+  border-radius: 5px;
+  border-color: #ffffff;
+}
+
+}
+
+
 
 div#title{
     
     text-align :center;
     font-size: large;   
     margin-top:0%;
-    background: linear-gradient(-12deg, #3919d6, #910ad9);
+    background-color:white;
     font-family: Arial, sans-serif;
     padding-top: 10px;
     padding-bottom: 20px;
     border-radius: 10px;
    
 }
+
+
+
 menu{
     position: absolute;
     top: 0;
@@ -30,7 +47,7 @@ menu{
 }
 
 div#search-container{
-    background-color: #218fc6;
+    background-color: #ffffff;
     align-items: center;
     bottom: 20px;
     display: block;
@@ -38,8 +55,7 @@ div#search-container{
     padding: 10px 20px;
     font-size: 16px;
     margin-bottom: 0px;
-    cursor: pointer;
-    color: #9e20c5;
+    color: #000000;
     text-align: center;
     font-size: 150%;
 }
@@ -58,8 +74,9 @@ button{
 menu button{
     background: rgba(255, 255, 255, 0.12);
     border: 1px solid rgba(255, 255, 255, 0.5);
-    color: #ffffff;
+    color: #0710b8;
     border-radius: 8px;
+    border-color: aqua;
 }
 
 side-panel{
@@ -85,7 +102,8 @@ menu button:active + .side-panel{
 
 body {
         margin: 0;
-        font-family: Arial, sans-serif;
+        font-family:sans-serif;
+        
       }
 
       #main {
@@ -107,7 +125,7 @@ body {
         overflow: hidden;
         transition: width 0.3s ease;
         background: #b02f2f;
-        border-left: 1px solid #ccc;
+        border-left: 1px solid #d50b0b;
       }
 
       #side-panel.open {
