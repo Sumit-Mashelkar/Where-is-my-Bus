@@ -8,24 +8,38 @@
   <!-- name and logo of the webpage-->>
   <body>
     <div id="title">Where is my Bus</div>
-    <div id="main">
-      <!--search form-->
-      <form class="search-form">
-        <div calss="input-group">
-          <label for="from"> </label>
-          <input type="text" id="from" placeholder="source" />
-        </div>
 
-        <div class="input-group">
-          <label for="to"></label>
-          <input id="to" type="text" placeholder="to" />
-          <button type="button" id="seach-button">search</button>
-        </div>
-      </form>
+    <!--search form-->
+    <!-- <form class="search-form">
+      <div class="input-group">
+        <label for="from"> </label>
+        <input type="text" id="from" placeholder="source" />
+      </div>
 
-      <!--side panel menu-->
+      <div class="input-group">
+        <label for="to"></label>
+        <input id="to" type="text" placeholder="to" />
+        <button type="button" id="seach-button">search</button>
+      </div>
+    </form> -->
+    <button id="openModal">Search Route</button>
 
-      <!--   <div id="content">
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <div class="handle"></div>
+
+        <h2>Find Your Bus</h2>
+
+        <input type="text" placeholder="Starting stop" />
+
+        <input type="text" placeholder="Destination stop" />
+
+        <button id="searchBtn">Find Buses</button>
+      </div>
+    </div>
+    <!--side panel menu-->
+
+    <!--   <div id="content">
         <menu>
           <button id="menu">Menu</button>
         </menu>
@@ -40,7 +54,6 @@
           <p>More placeholder text here.</p>
         </div>
       </aside>-->
-    </div>
 
     <script src="script.js"></script>
   </body>
