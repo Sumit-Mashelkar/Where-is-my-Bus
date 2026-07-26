@@ -1,0 +1,21 @@
+{
+  "name": "where-is-my-bus",
+  "version": "1.0.0",
+  "description": "A crowd sourced bus tracking  application",
+  "main": "main.jsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sumit-Mashelkar/Where-is-my-Bus.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Sumit-Mashelkar/Where-is-my-Bus/issues"
+  },
+  "homepage": "https://github.com/Sumit-Mashelkar/Where-is-my-Bus#readme"
+}

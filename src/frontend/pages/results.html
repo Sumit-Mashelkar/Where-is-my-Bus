@@ -1,0 +1,66 @@
+import BusCard from
+"D:\where-is-my-bus-final\Where-is-my-Bus\src\frontend\component\BusCard.jsx";
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Results - Where is my Bus</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="results-page">
+      <div class="results-header">
+        <a class="back-btn" href="index.html" aria-label="Go back">←</a>
+
+        <div class="header-text">
+          <p class="title">Results</p>
+          <p class="subtitle">3 buses found</p>
+        </div>
+      </div>
+
+      <div class="route-pill">
+        <div class="dot blue"></div>
+        <p class="route-origin">Starting Stop</p>
+        <span class="arrow">→</span>
+        <p class="route-destination">Destination Stop</p>
+        <div class="dot pink"></div>
+      </div>
+
+      <div class="filters">
+        <button>Fastest ETA</button>
+        <button>All</button>
+      </div>
+
+      <div class="results-list">
+        <div class="result-card">
+          <div class="bus-badge">12</div>
+          <div class="bus-info">
+            <p class="bus-name">Route 12</p>
+            <p class="bus-times">8:00 AM → 8:45 AM</p>
+          </div>
+          <div class="eta-box">5m</div>
+        </div>
+
+        <div class="result-card">
+          <div class="bus-badge">18</div>
+          <div class="bus-info">
+            <p class="bus-name">Route 18</p>
+            <p class="bus-times">8:15 AM → 9:00 AM</p>
+          </div>
+          <div class="eta-box">12m</div>
+        </div>
+
+        <div class="result-card">
+          <div class="bus-badge">22</div>
+          <div class="bus-info">
+            <p class="bus-name">Route 22</p>
+            <p class="bus-times">8:30 AM → 9:15 AM</p>
+          </div>
+          <div class="eta-box">18m</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
