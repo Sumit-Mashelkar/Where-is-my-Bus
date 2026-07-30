@@ -1,13 +1,12 @@
-// import { useState } from "react";
-import ResultsPage from "./ResultsPage.jsx";
+import { useState } from "react";
+
 
 const Search = () => {
-
+    const [showResults, setShowResults] = useState(false);
 
     const handleSearch = () => {
-        ResultsPage();
-    };
-
+        setShowResults(true);
+    }
 
     return (
         <div className="search">
@@ -22,6 +21,7 @@ const Search = () => {
             <button className="search-button" onClick={handleSearch}>
                 find Buses
             </button>
+            {showResults && <div className="result">Result page</div>}
         </div>
     );
 };
