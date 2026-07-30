@@ -30,6 +30,22 @@
   }
 }
 
+.center-text{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 70px;
+
+}
+
+.button-icon-click{
+  display: flex;
+  margin-right: 20px;
+  align-items: center;
+
+ 
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --text: #9ca3af;

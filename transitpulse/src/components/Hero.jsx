@@ -6,9 +6,13 @@ const Hero = () => {
   };
 
   return (
-    <section onClick={handleClick} style={{ cursor: "pointer" }}>
-      <h1>{heroText}</h1>
-    </section>
+    <div className="center-text">
+    <h1 onClick={handleClick} style={{ cursor: "pointer" }}>
+      {heroText}</h1>
+    
+
+    <button className="button-icon-click" onClick={handleClick} style={{cursor: "pointer"}}>bell</button>
+    </div>
   );
 };
 
