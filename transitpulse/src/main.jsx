@@ -5,6 +5,7 @@ import App from './App.jsx'
 import Hero from './components/Hero.jsx'
 import Search from './components/search.jsx'
 
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Hero />

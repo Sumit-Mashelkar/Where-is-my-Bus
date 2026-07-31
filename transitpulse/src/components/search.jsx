@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import ResultsPage from "./search-results.jsx";
 
 const Search = () => {
     const [showResults, setShowResults] = useState(false);
@@ -10,18 +10,24 @@ const Search = () => {
 
     return (
         <div className="search">
-            <input className="from" 
-            type="text"
-            placeholder="starting from.."
-            ></input>
-            <input className="to"
-            type="text"
-            placeholder="going to.."
-            ></input>
-            <button className="search-button" onClick={handleSearch}>
-                find Buses
-            </button>
-            {showResults && <div className="result">Result page</div>}
+            {!showResults ? (
+                <>
+                    <input className="from"
+                        type="text"
+                        placeholder="starting from.."
+                    />
+                    <input className="to"
+                        type="text"
+                        placeholder="going to.."
+                    />
+                    <button className="search-button" onClick={handleSearch}>
+                        find Buses
+                    </button>
+                </>
+            ) : (
+                <ResultsPage />  
+            )
+            }
         </div>
     );
 };
