@@ -5,7 +5,7 @@ const footerStyles = {
   bottom: 0,
   left: 0,
   right: 0,
-  height: '72px',
+  height: '40px',
   background: '#ffffff',
   borderTop: '1px solid #ddd',
   display: 'flex',

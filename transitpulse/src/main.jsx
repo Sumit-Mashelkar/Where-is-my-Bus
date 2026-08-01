@@ -10,7 +10,7 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Hero />
     <Search/>
-    <App />
+   
     <Footer onNavigate={(tabId) => {
       console.log(`Navigated to tab: ${tabId}`);
     }} />

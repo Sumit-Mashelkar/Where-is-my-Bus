@@ -30,13 +30,33 @@
   }
 }
 
+body {
+  background-color: #0B0A0F;
+}
+
 .center-text{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-left: 70px;
+  padding: 0 20px;
+  width: 100%;
+  box-sizing: border-box;
 
 }
+
+.search { 
+
+  left: 50%;
+  position: relative;
+  transform: translateX(-50%);
+  
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  
+} */
 
 .button-icon-click{
   display: flex;
@@ -45,6 +65,7 @@
 
  
 }
+
 
 @media (prefers-color-scheme: dark) {
   :root {
