@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import ResultsPage from "./search-results.jsx";
 
 const resultsStyle = {
-    left: "30%",
+    left:"30%",
+    right: "30%",
     top: "200px",
     padding: "24px",
     transform: "translate(-50%, -50%)",

@@ -1,19 +1,25 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
-import Hero from './components/Hero.jsx'
-import Search from './components/search.jsx'
-import Footer from './components/footer.jsx'
+import LandingPage from './pages/landingPage.jsx'
+import resultsPage from './pages/resultsPage.jsx'
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <Hero />
-    <Search/>
-   
-    <Footer onNavigate={(tabId) => {
-      console.log(`Navigated to tab: ${tabId}`);
-    }} />
-    
-  </StrictMode>,
-)
+<Router>
+    <Routes>
+      
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/results" element={<ResultsPage />} />
+            
+    </Routes>
+
+</Router>
+
+
+// const root = createRoot(document.getElementById('root'))
+// root.render(
+//   <StrictMode>
+//     <LandingPage />    
+//   </StrictMode>,
+// )
