@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import ResultsPage from "./search-results.jsx";
+import { useNavigate } from "react-router-dom";
 
 const resultsStyle = {
     left:"30%",
@@ -36,12 +37,15 @@ const inputStyle = {
 
 
 
-
 const Search = () => {
     const [showResults, setShowResults] = useState(false);
 
+    
+    const navigate = useNavigate();
+
     const handleSearch = () => {
-        setShowResults(true);
+        // setShowResults(true);
+        navigate("/resultsPage");
     }
 
     return (

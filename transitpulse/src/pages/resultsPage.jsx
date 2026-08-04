@@ -5,7 +5,7 @@ import Footer from '../components/footer.jsx'
 
 
 
-const resultsPage = () => {
+const ResultsPage = () => {
     return (
         <>
         <Hero/>
@@ -15,5 +15,5 @@ const resultsPage = () => {
     );
 };
 
-export default resultsPage;
-import ResultsPage from '../components/search-results.jsx'
+export default ResultsPage;
+
