@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import ResultsPage from "./search-results.jsx";
+import ResultsPage from "../pages/resultsPage.jsx";
 import { useNavigate } from "react-router-dom";
+import ErrorPage from "./ErrorPage.jsx";
 
 const resultsStyle = {
     left:"30%",
@@ -40,12 +41,19 @@ const inputStyle = {
 const Search = () => {
     const [showResults, setShowResults] = useState(false);
 
-    
+    const [fromInputValue, setFromInputValue] = useState("");
+    const [toInputValue, setToInputValue] = useState("");
+
     const navigate = useNavigate();
 
     const handleSearch = () => {
         // setShowResults(true);
-        navigate("/resultsPage");
+        navigate("/resultsPage",{
+            state: {
+                from:fromInputValue,
+                to:toInputValue,
+            },
+        });
     }
 
     return (
@@ -62,12 +70,16 @@ const Search = () => {
                     <input className="from-input" style={inputStyle}
                         type="text"
                         placeholder="starting from.."
+                        value={fromInputValue}
+                        onChange={(e) => setFromInputValue(e.target.value)}
                     />
                     </div>
                     <div className="to-search-div">
                     <input className="to-input" style={inputStyle}
                         type="text"
                         placeholder="going to.."
+                        value={toInputValue}
+                        onChange={(e) => setToInputValue(e.target.value)}
                     />
                     </div>
                     <button
@@ -89,7 +101,8 @@ const Search = () => {
                     </button>
                 </>
             ) : (
-                <ResultsPage />  
+                <ResultsPage />
+                
             )
             }
         </motion.div>
