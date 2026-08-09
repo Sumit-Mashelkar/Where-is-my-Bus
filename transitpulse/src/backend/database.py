@@ -14,7 +14,22 @@ CREATE TABLE IF NOT EXISTS buses (
 )
 """)
 
+cursor.execute("""
+INSERT INTO buses (bus_number, from_city, to_city, departure)
+VALUES ('101', 'Bengaluru', 'Mysuru', '08:30')
+""")
+
+cursor.execute("""
+INSERT INTO buses (bus_number, from_city, to_city, departure)
+VALUES ('205', 'Bengaluru', 'Mysuru', '09:15')
+""")
+
+cursor.execute("""
+INSERT INTO buses (bus_number, from_city, to_city, departure)
+VALUES ('310', 'Bengaluru', 'Hubballi', '10:00')
+""")
+
 connection.commit()
 connection.close()
 
-print("Database created!")
+print("Database created and sample data inserted successfully.")

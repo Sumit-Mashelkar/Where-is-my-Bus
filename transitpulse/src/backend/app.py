@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import request
+import sqlite3
 
 app = Flask(__name__)
 
@@ -41,6 +42,22 @@ def get_routes():
     return {
         "message": "Fetching all routes"
     }
+
+@app.route("/buses")
+def get_buses():
+
+    connection = sqlite3.connect("transitpulse.db")
+
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT * FROM buses")
+
+    buses = cursor.fetchall()
+
+    connection.close()
+
+    return buses
+
 
 if __name__ == "__main__":
     app.run(debug=True)
