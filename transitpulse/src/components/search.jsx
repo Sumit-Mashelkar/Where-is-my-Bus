@@ -46,15 +46,34 @@ const Search = () => {
 
     const navigate = useNavigate();
 
-    const handleSearch = () => {
-        // setShowResults(true);
-        navigate("/resultsPage",{
-            state: {
-                from:fromInputValue,
-                to:toInputValue,
-            },
-        });
-    }
+    // const handleSearch = () => {
+    //     // setShowResults(true);
+    //     navigate("/resultsPage",{
+    //         state: {
+    //             from:fromInputValue,
+    //             to:toInputValue,
+    //         },
+    //     });
+    // }
+
+    const handleSearch = async () => {
+    const response = await fetch("http://127.0.0.1:5000/search", {
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/json",
+    },
+
+    body: JSON.stringify({
+      from: fromInputValue,
+      to: toInputValue,
+    }),
+  });
+
+  const data = await response.json();
+
+  console.log(data);
+};
 
     return (
         <motion.div
