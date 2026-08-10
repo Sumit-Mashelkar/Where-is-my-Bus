@@ -1,0 +1,12 @@
+import requests
+
+response = requests.post(
+    "http://127.0.0.1:5000/search",
+    json={
+        "from": "Bengaluru",
+        "to": "Mysuru"
+    }
+)
+
+print(response.status_code)
+print(response.json())
