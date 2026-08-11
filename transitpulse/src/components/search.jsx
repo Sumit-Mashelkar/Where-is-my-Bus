@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import ResultsPage from "../pages/resultsPage.jsx";
 import { useNavigate } from "react-router-dom";
 import ErrorPage from "./ErrorPage.jsx";
+import { Await } from "react-router-dom";
+
 
 const resultsStyle = {
     left:"30%",
@@ -46,34 +48,27 @@ const Search = () => {
 
     const navigate = useNavigate();
 
-    const handleSearch = () => {
-        // setShowResults(true);
-        navigate("/resultsPage",{
-            state: {
-                from:fromInputValue,
-                to:toInputValue,
-            },
-        });
-    }
 
-//     const handleSearch = async () => {
-//     const response = await fetch("http://127.0.0.1:5000/search", {
-//     method: "POST",
 
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
+    const handleSearch = async () => {
+        // event.preventDefault();
+    const response = await fetch("http://127.0.0.1:5000/search", {
+    method: "POST",
 
-//     body: JSON.stringify({
-//       from: fromInputValue,
-//       to: toInputValue,
-//     }),
-//   });
+    headers: {
+      "Content-Type": "application/json",
+    },
 
-//   const data = await response.json();
+    body: JSON.stringify({
+      from: fromInputValue,
+      to: toInputValue,
+    }),
+  });
 
-//   console.log(data);
-// };
+ const data = await response.json();
+
+setBuses(data);
+};
 
     return (
         <motion.div
@@ -126,6 +121,54 @@ const Search = () => {
             }
         </motion.div>
     );
+
+     return (
+    <div>
+
+      <input
+        value={from}
+        onChange={(e) => setFrom(e.target.value)}
+        placeholder="From"
+      />
+
+      <input
+        value={to}
+        onChange={(e) => setTo(e.target.value)}
+        placeholder="To"
+      />
+
+      <button onClick={handleSearch}>
+        Search
+      </button>
+
+
+      {/* Results */}
+
+      <div>
+
+        {buses.map((bus) => (
+          <div key={bus.id}>
+
+            <h3>
+              Bus {bus.bus_number}
+            </h3>
+
+            <p>
+              {bus.from_city} → {bus.to_city}
+            </p>
+
+            <p>
+              Departure: {bus.departure}
+            </p>
+
+          </div>
+        ))}
+
+      </div>
+
+    </div>
+  );
+};
 };
 
 export default Search;

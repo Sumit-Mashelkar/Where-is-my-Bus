@@ -7,6 +7,7 @@ import LandingPage from './pages/landingPage.jsx'
 import ResultsPage from './pages/resultsPage.jsx'
 import ErrorPage from './components/ErrorPage.jsx'
 
+
 const root = createRoot(document.getElementById('root'))
 root.render(
   <StrictMode>
@@ -16,6 +17,7 @@ root.render(
             <Route path="/" element={<LandingPage />} />
             <Route path="/resultsPage" element={<ResultsPage />} />
             <Route path="/error" element={<ErrorPage />} />
+            {/* <Route path="/search" element={<ResultsPage/>}/> */}
           </Routes>
     </Router>
   </StrictMode>,
