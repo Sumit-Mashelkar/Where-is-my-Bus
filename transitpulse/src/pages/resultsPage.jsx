@@ -12,16 +12,21 @@ const ResultsPage = () => {
         <>
             <Hero />
             <div className="results-page">
-                <h1>Results Page</h1>
-                {from && to && (
-                    <p>
+                
+                <section className='filter-sort'>
+                      <div>
+                        <p>
                         Showing buses from <strong>{from}</strong> to <strong>{to}</strong>
-                    </p>
-                )}
+                        </p>
+                        <button>all</button>
+                      </div>
+                </section>
+                  
+                
                 <div className="bus-list">
                     {buses.length > 0 ? (
                         buses.map((bus) => (
-                            <div key={bus.id ?? `${bus.bus_number}-${bus.departure}` } className="bus-item">
+                            <div key={bus.id} className="bus-item">
                                 <p>Bus Number: {bus.bus_number}</p>
                                 <p>From: {bus.from_city}</p>
                                 <p>To: {bus.to_city}</p>

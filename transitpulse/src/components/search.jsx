@@ -43,6 +43,7 @@ const Search = () => {
     const navigate = useNavigate();
 
     const handleSearch = async () => {
+        //handles edge case where user clicks search without entering both origin and destination
         if (!fromInputValue.trim() || !toInputValue.trim()) {
             setErrorMessage("Please enter both origin and destination.");
             return;
@@ -82,7 +83,7 @@ const Search = () => {
             setIsLoading(false);
         }
     };
-
+ 
     return (
         <motion.div
             className="search"

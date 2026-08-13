@@ -146,3 +146,76 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+/* bus card  */
+.bus-item{
+  background: linear-gradient(135deg, #0f1c34 0%, #1a2f4a 100%);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 1px rgba(170, 59, 255, 0.3);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  width: 60%;
+  box-sizing: border-box;
+  border-radius: 16px;
+  margin: 16px auto;
+  border: 1px solid rgba(192, 132, 252, 0.2);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.bus-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(170, 59, 255, 0.2);
+  border-color: rgba(192, 132, 252, 0.4);
+}
+
+.bus-list{
+  display: block;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .bus-item {
+    width: 90%;
+    padding: 18px;
+    margin: 12px auto;
+    border-radius: 12px;
+    font-size: 14px;
+  }
+
+  .bus-item h2,
+  .bus-item h1 {
+    font-size: 18px;
+    margin: 8px 0;
+  }
+
+  .bus-item p {
+    font-size: 13px;
+    line-height: 140%;
+  }
+}
+
+@media (max-width: 480px) {
+  .bus-item {
+    width: 95%;
+    padding: 16px;
+    margin: 10px auto;
+    border-radius: 10px;
+    font-size: 12px;
+  }
+
+  .bus-item h2,
+  .bus-item h1 {
+    font-size: 16px;
+    margin: 6px 0;
+  }
+
+  .bus-item p {
+    font-size: 12px;
+    line-height: 135%;
+  }
+}
