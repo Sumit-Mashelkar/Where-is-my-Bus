@@ -5,8 +5,8 @@ import './index.css'
 import App from './App.jsx'
 import LandingPage from './pages/landingPage.jsx'
 import ResultsPage from './pages/resultsPage.jsx'
-import ErrorPage from './components/ErrorPage.jsx'
-
+import ErrorPage from './pages/ErrorPage.jsx'
+import BusDetailsPage from './pages/BusDetailsPage.jsx'
 
 const root = createRoot(document.getElementById('root'))
 root.render(
@@ -17,7 +17,7 @@ root.render(
             <Route path="/" element={<LandingPage />} />
             <Route path="/resultsPage" element={<ResultsPage />} />
             <Route path="/error" element={<ErrorPage />} />
-            {/* <Route path="/search" element={<ResultsPage/>}/> */}
+            <Route path="/BusDetail" element={<BusDetailsPage />}/>
           </Routes>
     </Router>
   </StrictMode>,

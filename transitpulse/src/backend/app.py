@@ -113,5 +113,38 @@ def search():
 
     return buses
 
+
+# #fetch bus details based on bus id
+# @app.route("/BusDetails/<int:bus_id>")
+# def get_bus_details(bus_id):
+
+#     connection = sqlite3.connect("transitpulse.db")
+#     cursor = connection.cursor()
+
+#     cursor.execute(
+#         """
+#         SELECT * FROM buses
+#         WHERE id = ?
+#         """,
+#         (bus_id,)
+#     )
+
+#     row = cursor.fetchone()
+
+#     connection.close()
+
+#     if row:
+#         bus = {
+#             "id": row[0],
+#             "bus_number": row[1],
+#             "from_city": row[2],
+#             "to_city": row[3],
+#             "departure": row[4]
+#         }
+#         return bus
+#     else:
+#         return {"error": "Bus not found"}, 404
+
+    
 if __name__ == "__main__":
     app.run(debug=True)
