@@ -147,6 +147,22 @@ code {
   background: var(--code-bg);
 }
 
+/* filter sort section above bus card */
+.filter-sort {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px ;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--bg);
+  border-bottom: 2px solid rgb(58, 58, 58);
+  border-radius: 25px;
+  margin: 12px auto;
+}
+
+
+
 /* bus card  */
 .bus-item{
   background: linear-gradient(135deg, #0f1c34 0%, #1a2f4a 100%);
@@ -185,6 +201,7 @@ code {
     margin: 12px auto;
     border-radius: 12px;
     font-size: 14px;
+    justify-content: space-between;
   }
 
   .bus-item h2,
@@ -206,6 +223,7 @@ code {
     margin: 10px auto;
     border-radius: 10px;
     font-size: 12px;
+    justify-content: space-between;
   }
 
   .bus-item h2,
