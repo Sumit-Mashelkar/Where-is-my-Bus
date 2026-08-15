@@ -12,24 +12,40 @@ const ResultsPage = () => {
 
     const navigate = useNavigate();
 
-    const handleBusItemClick = (busId) => {
+    const handleBusItemClick =  async (busId) => {
         // Handle the click event for a bus item
         console.log("Bus item clicked:", busId);
-        // You can navigate to a detailed page or perform any other action here
-        // For example: navigate(`/bus/${bus.id}`);
-        navigate("/BusDetail")
-        // const response = await fetch("http://127.0.0.1:5000/search", {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //         },
-        //         body: JSON.stringify({
-        //            bus
-        //         }),
-        //     });
 
-    };
-    
+        try{
+        const response = await fetch(`http://127.0.0.1:5000/BusDetails/${busId}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                   busId:busId
+                }),
+            });
+        if (!response.ok) {
+                throw new Error("Search request failed");
+            }
+
+        const data = await response.json();
+               
+        navigate(`/BusDetail/${busId}`,{
+                state: {
+                busDetails: data,
+            },
+        });
+        
+    } catch (error) {
+            console.log("error encountered while fetching data");
+            
+        } finally {
+            console.log("finally executed");
+        }
+
+}
     return (
         <>
             <Hero />
