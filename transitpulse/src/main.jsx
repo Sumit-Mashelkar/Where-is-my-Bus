@@ -17,7 +17,7 @@ root.render(
             <Route path="/" element={<LandingPage />} />
             <Route path="/resultsPage" element={<ResultsPage />} />
             <Route path="/error" element={<ErrorPage />} />
-            <Route path="/BusDetail" element={<BusDetailsPage />}/>
+            <Route path="/BusDetail/:busId" element={<BusDetailsPage />}/>
           </Routes>
     </Router>
   </StrictMode>,
