@@ -1,7 +1,6 @@
 import Hero from '../components/header.jsx';
 import Footer from '../components/footer.jsx';
-import { Navigate, useLocation } from 'react-router-dom';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate, useLocation } from "react-router-dom";
 
 const ResultsPage = () => {
     const location = useLocation();
