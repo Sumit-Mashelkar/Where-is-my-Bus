@@ -177,7 +177,7 @@ code {
   border-radius: 16px;
   margin: 16px auto;
   border: 1px solid rgba(192, 132, 252, 0.2);
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   backdrop-filter: blur(10px);
 }
 
@@ -239,8 +239,8 @@ code {
 }
 
 .busDetails{
-  background: #f8fafc;
-  color: #1f2937;
+  background: #010101;
+  color: #dee4ed;
   width: min(90%, 900px);
   padding: 24px 28px;
   border-radius: 12px;
@@ -250,5 +250,9 @@ code {
   text-align: left;
   display: flex;
   flex-direction: column;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: var(--sans);
+
   gap: 10px;
 }

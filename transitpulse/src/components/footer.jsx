@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const footerStyles = {
   position: 'fixed',
@@ -41,12 +42,19 @@ const tabs = [
 
 function Footer({ onNavigate }) {
   const [activeTab, setActiveTab] = useState('home');
+  // console.log(`tab: ${tabs[0].icon}`);
+
+  const navigate = useNavigate();
 
   const handleTabClick = (id) => {
     setActiveTab(id);
-    if (typeof onNavigate === 'function') {
-      onNavigate(id);
-    }
+    // if (typeof onNavigate === 'function') {
+    //   onNavigate(id);
+    // }
+
+    if (id === 'home'){
+      navigate("/");
+    };
   };
 
   return (
