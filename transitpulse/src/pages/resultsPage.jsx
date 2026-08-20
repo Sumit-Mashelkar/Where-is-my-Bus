@@ -2,6 +2,10 @@ import Hero from '../components/header.jsx';
 import Footer from '../components/footer.jsx';
 import { useNavigate, Navigate, useLocation } from "react-router-dom";
 
+
+const busInfoStyles = {
+   
+}
 const ResultsPage = () => {
     const location = useLocation();
     const buses = location.state?.buses ?? [];
@@ -67,10 +71,10 @@ const ResultsPage = () => {
                             key={bus.id} 
                             className="bus-item"
                             onClick={() => handleBusItemClick(bus.id)}>
-                                <p>Bus Number: {bus.bus_number}</p>
-                                <p>From: {bus.from_city}</p>
-                                <p>To: {bus.to_city}</p>
-                                <p>Departure: {bus.departure}</p>
+                                <section className='busInfo' style={busInfoStyles}>Bus Number: {bus.bus_number}</section>
+                                <section className='busInfo' style={busInfoStyles}>From: {bus.from_city}</section>
+                                <section className='busInfo' style={busInfoStyles}>To: {bus.to_city}</section>
+                                <section className='busInfo' style={busInfoStyles}>Departure: {bus.departure}</section>
                             </div>
                         ))
                     ) : (

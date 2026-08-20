@@ -54,7 +54,17 @@ function Footer({ onNavigate }) {
 
     if (id === 'home'){
       navigate("/");
-    };
+
+    }
+    else if (id === 'routes'){
+      navigate("/resultsPage");
+    }
+    else if (id === 'updates'){
+      navigate("/error");
+    }
+    else if (id === 'profile'){
+      navigate("/error");
+    }
   };
 
   return (
