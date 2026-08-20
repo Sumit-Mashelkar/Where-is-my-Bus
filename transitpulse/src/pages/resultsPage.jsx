@@ -1,7 +1,7 @@
 import Hero from '../components/header.jsx';
 import Footer from '../components/footer.jsx';
 import { useNavigate, Navigate, useLocation } from "react-router-dom";
-
+import { useState } from 'react';
 
 const busInfoStyles = {
    
@@ -15,40 +15,14 @@ const ResultsPage = () => {
 
     const navigate = useNavigate();
 
-    const handleBusItemClick =  async (busId) => {
+    const handleBusItemClick =  (busId) => {
         // Handle the click event for a bus item
         console.log("Bus item clicked:", busId);
 
-        try{
-        const response = await fetch(`http://127.0.0.1:5000/BusDetails/${busId}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                   busId:busId
-                }),
-            });
-        if (!response.ok) {
-                throw new Error("Search request failed");
-            }
-
-        const data = await response.json();
-               
-        navigate(`/BusDetail/${busId}`,{
-                state: {
-                busDetails: data,
-            },
-        });
-        
-    } catch (error) {
-            console.log("error encountered while fetching data");
-            
-        } finally {
-            console.log("finally executed");
-        }
+         navigate(`/BusDetail/${busId}`)
 
 }
+
     return (
         <>
             <Hero />

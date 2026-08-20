@@ -114,8 +114,8 @@ def search():
     return buses
 
 
-#fetch bus details based on bus id
-@app.route("/BusDetails/<int:bus_id>", methods=["POST"])
+#fetch bus details based on bus id fetched from the URL
+@app.route("/BusDetails/<int:bus_id>")
 def get_bus_details(bus_id):
 
     connection = sqlite3.connect("transitpulse.db")

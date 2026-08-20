@@ -256,3 +256,41 @@ code {
 
   gap: 10px;
 }
+
+.busName{
+  background: #010101;
+  color: #dee4ed;
+  width: 10%;
+  padding: 2px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.06);
+  margin: 0 auto;
+  text-align: left;
+  display: inline;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: var(--sans);
+  margin: 0px;
+
+  gap: 10px;
+}
+
+.from{
+  background: #010101;
+  color: #dee4ed;
+  width: 10%;
+  padding: 2px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.06);
+
+  text-align: left;
+  display:inline;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: var(--sans);
+  margin: 0px;
+
+  gap: 10px;
+}
