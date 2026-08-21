@@ -5,10 +5,11 @@ import Footer from '../components/footer.jsx';
 import { Navigate, useLocation, useParams } from 'react-router-dom';
 
 const BusDetailsPage =  () => {
-    const location = useLocation();
+    
     const [busDetails, setBusDetails] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-
+ 
+    
 	//fetch bus ID from URL
     const {busId} = useParams()
     console.log(`busId fetched from busdetails page: ${busId}`);
@@ -39,7 +40,7 @@ const BusDetailsPage =  () => {
     
     return(
             <>
-                
+                <Hero />
                 <div>
                 <h1>Bus Details</h1>
                 {isLoading && (
@@ -59,7 +60,7 @@ const BusDetailsPage =  () => {
                     </div>
                 )}
             </div>
-           
+           <Footer />
             </>
         )
        

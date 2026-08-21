@@ -124,7 +124,8 @@ def get_bus_details(bus_id):
     cursor.execute(
         """
         SELECT * FROM buses
-        WHERE id = ?
+        WHERE id = 
+        ?
         """,
         (bus_id,)
     )
@@ -145,6 +146,15 @@ def get_bus_details(bus_id):
     else:
         return {"error": "Bus not found"}, 404
 
+@app.route("/allRoutes")
+def allRoutes():
+
+    connection = sqlite3.connect("transitpulse.db")
+    cursor = connection.cursor()
+
+    cursor.execute()
+
+    return("all routes displaying")
 
 
     
