@@ -53,7 +53,7 @@ const BusDetailsPage =  () => {
 
                 {!isLoading && busDetails && (
                     <div className='busDetails'>
-                        <div className='busName'>Bus Name: {busDetails.bus_number}</div>
+                        <div className='busName'>Bus Name: {busDetails.bus_Number}</div>
                         <div className='from'>From: {busDetails.from_city}</div>
                         <div>To: {busDetails.to_city}</div>
                         <div>Departure: {busDetails.departure}</div>

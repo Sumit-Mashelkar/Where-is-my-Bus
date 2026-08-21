@@ -152,9 +152,27 @@ def allRoutes():
     connection = sqlite3.connect("transitpulse.db")
     cursor = connection.cursor()
 
-    cursor.execute()
+    cursor.execute(
+        """
+        SELECT * FROM buses
+        """
+    )
 
-    return("all routes displaying")
+    result = cursor.fetchall()
+
+    if (result):
+        routes=[]
+        for row in result:
+            route = {
+                "id": row[0],
+                "bus_number": row[1],
+                "from_city": row[2],
+                "to_city": row[3],
+                "departure": row[4]
+            }
+            routes.append(route)
+    
+    return(routes)
 
 
     

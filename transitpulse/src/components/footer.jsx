@@ -57,7 +57,7 @@ function Footer({ onNavigate }) {
 
     }
     else if (id === 'routes'){
-      navigate("/resultsPage");
+      navigate("/allRoutes");
     }
     else if (id === 'updates'){
       navigate("/error");
