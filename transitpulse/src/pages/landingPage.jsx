@@ -1,6 +1,7 @@
 import Hero from '../components/header.jsx';
 import Search from '../components/search.jsx';
 import Footer from '../components/footer.jsx';
+import QuickAcess from '../components/quickAction.jsx';
 
 
 const LandingPage = () => {
@@ -10,6 +11,7 @@ const LandingPage = () => {
         <>
             <Hero />
             <Search />
+            <QuickAcess />
             <Footer />
         </>
     );
