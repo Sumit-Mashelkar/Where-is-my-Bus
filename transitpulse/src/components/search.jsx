@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 const resultsStyle = {
     left: "30%",
-    right: "30%",
+    // right: "30%",
     top: "200px",
     padding: "24px",
-    transform: "translate(-50%, -50%)",
+    transform: "translateX(-50%)",
     background: "linear-gradient(135deg, #ffffff 0%, #f5f7fb 100%)",
     position: "absolute",
     display: "flex",

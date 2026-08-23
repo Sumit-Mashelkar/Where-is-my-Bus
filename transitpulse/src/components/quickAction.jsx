@@ -1,18 +1,17 @@
 // quick access menu
-
+import { useNavigate } from "react-router-dom";
 
 
 const CardStyles = {
     left: "50%",
-    top: "500px",
-
+    bottom: "56px",
     padding: "18px",
     justifyContent: "center",
     gap: "12px",
-    transform: "translate(-50%, -50%)",
-    background: "#ffffff",
+    transform: "translateX(-50%)",
+    background: "#6b6b6d",
     position: "absolute",
-    display: "flex",
+    display: "block",
     flexDirection: "column",
     alignItems: "center",
     width: "min(70%, 520px)",
@@ -28,8 +27,8 @@ const iconStyles = {
     borderRadius: "10px",
     padding: "12px 16px",
     margin: 0,
-    color: "#1e293b",
-    background: "#f8fafc",
+    color: "#fbfbfb",
+    background: "#010304",
     border: "1px solid #e2e8f0",
     fontSize: "14px",
     fontWeight: "600",
@@ -40,11 +39,15 @@ const iconStyles = {
 } 
 
 const QuickAcess = () => {
+    
+    const handleClick = () => {
+        Navigate("/url")
+    }
 
     return (
         
         <div id ="QuickAccessCard" style={CardStyles}>
-            <div  style={iconStyles}>report a Bus</div>
+            <div  style={iconStyles} onClick={handleClick}>report a Bus</div>
             <div  style={iconStyles}>add a Route</div>
         </div>
        
