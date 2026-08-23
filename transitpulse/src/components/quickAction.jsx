@@ -39,16 +39,14 @@ const iconStyles = {
 } 
 
 const QuickAcess = () => {
+    const Navigate = useNavigate();
     
-    const handleClick = () => {
-        Navigate("/url")
-    }
 
     return (
         
         <div id ="QuickAccessCard" style={CardStyles}>
-            <div  style={iconStyles} onClick={handleClick}>report a Bus</div>
-            <div  style={iconStyles}>add a Route</div>
+            <button  style={iconStyles} onClick={() => Navigate("/report-bus")}>report a Bus</button>
+            <button  style={iconStyles} onClick={() => Navigate("/add-route")}>add a Route</button>
         </div>
        
 
