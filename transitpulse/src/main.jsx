@@ -8,6 +8,8 @@ import ResultsPage from './pages/resultsPage.jsx'
 import ErrorPage from './pages/ErrorPage.jsx'
 import BusDetailsPage from './pages/BusDetailsPage.jsx'
 import AllRoutesPage from './pages/allroutesPage.jsx'
+import AddRoutesPage from './pages/AddRoutesPage.jsx'
+import ReportBusPage from './pages/ReportsPage.jsx'
 
 const root = createRoot(document.getElementById('root'))
 root.render(
@@ -20,6 +22,8 @@ root.render(
             <Route path="/error" element={<ErrorPage />} />
             <Route path="/BusDetail/:busId" element={<BusDetailsPage />}/>
             <Route path="/allRoutes" element={<AllRoutesPage />}/>
+            <Route path="/report-bus" element={<ReportBusPage />} />
+            <Route path="/add-route" element={<AddRoutesPage />} />
           </Routes>
     </Router>
   </StrictMode>,
