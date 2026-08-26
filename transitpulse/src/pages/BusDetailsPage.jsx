@@ -1,8 +1,8 @@
 //detailed view of selected buses, routes, stops and community updates
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Hero from '../components/header.jsx';
 import Footer from '../components/footer.jsx';
-import { Navigate, useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const BusDetailsPage =  () => {
     
@@ -12,9 +12,6 @@ const BusDetailsPage =  () => {
     
 	//fetch bus ID from URL
     const {busId} = useParams()
-    console.log(`busId fetched from busdetails page: ${busId}`);
-    
-    
     useEffect(() => {
         const run = async () => {
             try {
@@ -52,12 +49,46 @@ const BusDetailsPage =  () => {
                 )}
 
                 {!isLoading && busDetails && (
-                    <div className='busDetails'>
-                        <div className='busName'>Bus Name: {busDetails.bus_Number}</div>
-                        <div className='from'>From: {busDetails.from_city}</div>
-                        <div>To: {busDetails.to_city}</div>
-                        <div>Departure: {busDetails.departure}</div>
-                    </div>
+                    <main className='bus-report'>
+                        <section className='bus-report__summary'>
+                            <div>
+                                <p className='bus-report__eyebrow'>Selected bus</p>
+                                <h2>Bus {busDetails.bus_number}</h2>
+                                <p className='bus-report__journey'>
+                                    {busDetails.from_city} <span aria-hidden='true'>-&gt;</span> {busDetails.to_city}
+                                </p>
+                            </div>
+                            <div className='bus-report__departure'>
+                                <span>Departure</span>
+                                <strong>{busDetails.departure}</strong>
+                            </div>
+                        </section>
+
+                        <section className='route-panel' aria-labelledby='route-heading'>
+                            <div className='route-panel__heading'>
+                                <div>
+                                    <p className='bus-report__eyebrow'>Journey plan</p>
+                                    <h2 id='route-heading'>Route stops</h2>
+                                </div>
+                                <span>{busDetails.stops?.length ?? 0} stops</span>
+                            </div>
+                            {busDetails.stops?.length ? (
+                                <ol className='route-timeline'>
+                                    {busDetails.stops.map((stop, index) => (
+                                        <li className='route-stop' key={`${stop.order}-${stop.name}`}>
+                                            <span className='route-stop__marker' aria-hidden='true'>{index + 1}</span>
+                                            <div className='route-stop__details'>
+                                                <strong>{stop.name}</strong>
+                                                <span>{stop.arrival_time || 'Time not available'}</span>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ol>
+                            ) : (
+                                <p className='route-empty'>No route stops have been added for this bus yet.</p>
+                            )}
+                        </section>
+                    </main>
                 )}
             </div>
            <Footer />
