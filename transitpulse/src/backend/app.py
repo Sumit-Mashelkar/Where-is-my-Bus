@@ -132,19 +132,37 @@ def get_bus_details(bus_id):
 
     row = cursor.fetchone()
 
+    if not row:
+        connection.close()
+        return {"error": "Bus not found"}, 404
+
+    cursor.execute(
+        """
+        SELECT stop_order, stop_name, arrival_time
+        FROM route_stops
+        WHERE bus_id = ?
+        ORDER BY stop_order
+        """,
+        (bus_id,)
+    )
+    stop_rows = cursor.fetchall()
     connection.close()
 
-    if row:
-        bus = {
-            "id": row[0],
-            "bus_number": row[1],
-            "from_city": row[2],
-            "to_city": row[3],
-            "departure": row[4]
-        }
-        return bus
-    else:
-        return {"error": "Bus not found"}, 404
+    return {
+        "id": row[0],
+        "bus_number": row[1],
+        "from_city": row[2],
+        "to_city": row[3],
+        "departure": row[4],
+        "stops": [
+            {
+                "order": stop[0],
+                "name": stop[1],
+                "arrival_time": stop[2]
+            }
+            for stop in stop_rows
+        ]
+    }
 
 @app.route("/allRoutes")
 def allRoutes():
