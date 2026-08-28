@@ -259,6 +259,167 @@ code {
   gap: 10px;
 }
 
+.bus-report {
+  width: min(92%, 900px);
+  margin: 0 auto 48px;
+  text-align: left;
+}
+
+.bus-report__summary,
+.route-panel {
+  background: #111827;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.bus-report__summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: center;
+  padding: 28px;
+  color: #f8fafc;
+}
+
+.bus-report h2 {
+  color: #f8fafc;
+  margin: 4px 0 8px;
+  font-size: 30px;
+}
+
+.bus-report__eyebrow {
+  color: #67e8f9;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.bus-report__journey {
+  color: #cbd5e1;
+}
+
+.bus-report__departure {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 24px;
+  border-left: 1px solid #475569;
+  color: #94a3b8;
+}
+
+.bus-report__departure strong {
+  color: #fbbf24;
+  font-size: 24px;
+}
+
+.route-panel {
+  margin-top: 18px;
+  padding: 28px;
+  color: #e2e8f0;
+}
+
+.route-panel__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #334155;
+}
+
+.route-panel__heading h2 {
+  margin-bottom: 0;
+}
+
+.route-panel__heading > span {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.route-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 22px 0 4px;
+}
+
+.route-stop {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 58px;
+  padding-bottom: 16px;
+}
+
+.route-stop:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  top: 32px;
+  bottom: 0;
+  left: 15px;
+  border-left: 2px solid #0e7490;
+}
+
+.route-stop__marker {
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  border: 2px solid #22d3ee;
+  border-radius: 50%;
+  background: #111827;
+  color: #67e8f9;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.route-stop__details {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.route-stop__details span {
+  color: #fbbf24;
+  font-variant-numeric: tabular-nums;
+}
+
+.route-empty {
+  padding-top: 20px;
+  color: #94a3b8;
+}
+
+@media (max-width: 600px) {
+  .bus-report__summary,
+  .route-panel {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .bus-report__summary {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .bus-report__departure {
+    width: 100%;
+    padding: 14px 0 0;
+    border-top: 1px solid #475569;
+    border-left: 0;
+  }
+
+  .route-stop__details {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2px;
+  }
+}
+
 .busName{
   background: #010101;
   color: #dee4ed;
