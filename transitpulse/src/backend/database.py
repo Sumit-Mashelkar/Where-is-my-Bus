@@ -15,6 +15,14 @@ CREATE TABLE IF NOT EXISTS buses (
 """)
 
 cursor.execute("""
+DELETE FROM buses
+""")
+
+cursor.execute("""
+DELETE FROM route_stops
+""")
+
+cursor.execute("""
 CREATE TABLE IF NOT EXISTS route_stops (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     bus_id INTEGER NOT NULL,
@@ -80,4 +88,4 @@ for bus_number, stops in route_stops.items():
 connection.commit()
 connection.close()
 
-print("Database created and sample data inserted successfully.")
+print("Database created with two tables [buses] and [route_stops] and sample data inserted successfully.")
