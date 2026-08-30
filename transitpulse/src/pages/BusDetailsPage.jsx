@@ -55,7 +55,7 @@ const BusDetailsPage =  () => {
                                 <p className='bus-report__eyebrow'>Selected bus</p>
                                 <h2>Bus {busDetails.bus_number}</h2>
                                 <p className='bus-report__journey'>
-                                    {busDetails.from_city} <span aria-hidden='true'>-&gt;</span> {busDetails.to_city}
+                                    {busDetails.from_city} <span>-&gt;</span> {busDetails.to_city}
                                 </p>
                             </div>
                             <div className='bus-report__departure'>
@@ -67,7 +67,7 @@ const BusDetailsPage =  () => {
                         <section className='route-panel' aria-labelledby='route-heading'>
                             <div className='route-panel__heading'>
                                 <div>
-                                    <p className='bus-report__eyebrow'>Journey plan</p>
+                                    <p className='bus-report__eyebrow'>Journey </p>
                                     <h2 id='route-heading'>Route stops</h2>
                                 </div>
                                 <span>{busDetails.stops?.length ?? 0} stops</span>
@@ -79,7 +79,7 @@ const BusDetailsPage =  () => {
                                             <span className='route-stop__marker' aria-hidden='true'>{index + 1}</span>
                                             <div className='route-stop__details'>
                                                 <strong>{stop.name}</strong>
-                                                <span>{stop.arrival_time || 'Time not available'}</span>
+                                                <span>{stop.arrival_time || '--:--'}</span>
                                             </div>
                                         </li>
                                     ))}
