@@ -1,7 +1,10 @@
 // contains all bus reports
 import Hero from "../components/header";
 import Footer from "../components/footer";
-import { color } from "framer-motion";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useState} from "react";
+
+
 
 const mainStyle = {
     display: "flex",
@@ -27,7 +30,25 @@ const reportbusform = {
     backdropFilter: "blur(10px)",
 }
 
+
 const ReportBusPage = () => {
+    const navigate = useNavigate();
+
+    const [busName, setBusName] = useState("")
+    const [stopName, setStopName] = useState("")
+    const [status, setStatus] = useState("")
+    const [description, setDescription] = useState("")
+
+    const handleClick = () => {
+        if (busName && stopName && status && description) {
+        console.log("running")
+        navigate("/")
+        }
+        else {
+            navigate("/error");
+        }
+    };
+
     return (
         <>
         <Hero />
@@ -35,11 +56,27 @@ const ReportBusPage = () => {
         {/* <p>1: bus name, 2: display currrent time, 3: fetch the route/stops for busname, 4: current stop, 5: current status, 6: short description (optional) </p> */}
         <main style={mainStyle}>
             <form id = "report-bus-form" style={reportbusform}>
-                <input type="text" placeholder="Bus Name" ></input>
-                <input type="text" placeholder="stop name" ></input>
-                <input type="text" placeholder="deplayed,cancelled ?" ></input>
-                <input type="text" placeholder="describe" ></input>
-                <button>submit</button>
+                <input type="text" 
+                placeholder="Bus Name" 
+                value={busName}
+                onChange={(e) => {setBusName(e.target.value)}}/>
+
+                <input type="text" 
+                placeholder="stop name" 
+                value={stopName}
+                onChange={(e) => {setStopName(e.target.value)}}/>
+
+                <input type="text" 
+                placeholder="deplayed,cancelled ?" 
+                value={status}
+                onChange={(e) => {setStatus(e.target.value)}}/>
+
+                <input type="text" 
+                placeholder="describe" 
+                value={description}
+                onChange={(e) => {setDescription(e.target.value)}}/>
+
+                <button onClick={handleClick}>submit</button>
                  
             </form>
         </main>
