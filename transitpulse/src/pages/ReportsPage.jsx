@@ -41,7 +41,7 @@ const inputStyle = {
     fontSize: "1rem",
     outline: "none",
     transition: "border-color 0.2s ease, box-shadow 0.2s ease",
-    boxShadow: "inset 0 1px 2px rgba(15, 23, 42, 0.6)",
+    boxShadow: "0 8px 16px rgba(37, 99, 235, 0.18)",
 }
 
 const buttonStyle = {
