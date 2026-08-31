@@ -29,12 +29,20 @@ const ResultsPage = () => {
             <div className="results-page">
                 
                 <section className='filter-sort'>
-                      <div>
-                        <p>
-                        Showing buses from <strong>{from}</strong> to <strong>{to}</strong>
-                        </p>
-                        <button>all</button>
-                      </div>
+                    <div className='route-summary'>
+                        <div className='route-copy'>
+                            <span className='route-label'>Trip</span>
+                            <p>
+                                Showing buses from <strong>{from}</strong> to <strong>{to}</strong>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='filter-actions' aria-label='Filter and sort bus results'>
+                        <button type='button' className='filter-pill active'>All</button>
+                        <button type='button' className='filter-pill'>Fastest</button>
+                        <button type='button' className='filter-pill'>Soonest</button>
+                    </div>
                 </section>
                   
                 
@@ -45,10 +53,27 @@ const ResultsPage = () => {
                             key={bus.id} 
                             className="bus-item"
                             onClick={() => handleBusItemClick(bus.id)}>
-                                <section className='busInfo' style={busInfoStyles}>Bus Number: {bus.bus_number}</section>
-                                <section className='busInfo' style={busInfoStyles}>From: {bus.from_city}</section>
-                                <section className='busInfo' style={busInfoStyles}>To: {bus.to_city}</section>
-                                <section className='busInfo' style={busInfoStyles}>Departure: {bus.departure}</section>
+                                <div className='bus-topline'>
+                                    <span className='bus-badge'>Bus {bus.bus_number}</span>
+                                    <span className='bus-time'>{bus.departure}</span>
+                                </div>
+
+                                <div className='bus-route'>
+                                    <div className='route-point'>
+                                        <span className='dot start'></span>
+                                        <span>{bus.from_city}</span>
+                                    </div>
+                                    <div className='route-line'></div>
+                                    <div className='route-point'>
+                                        <span className='dot end'></span>
+                                        <span>{bus.to_city}</span>
+                                    </div>
+                                </div>
+
+                                <div className='bus-meta'>
+                                    <span>Departure</span>
+                                    <strong>{bus.departure}</strong>
+                                </div>
                             </div>
                         ))
                     ) : (
