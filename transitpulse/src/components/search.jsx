@@ -3,35 +3,34 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 const resultsStyle = {
-    left: "30%",
-    // right: "30%",
-    top: "200px",
+    position: "relative",
+    margin: "100px auto 0",
     padding: "24px",
-    transform: "translateX(-50%)",
-    background: "linear-gradient(135deg, #ffffff 0%, #f5f7fb 100%)",
-    position: "absolute",
+    background: "linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(239,246,255,0.96) 100%)",
     display: "flex",
     flexDirection: "column",
     gap: "12px",
     alignItems: "center",
     width: "min(92%, 440px)",
+    maxWidth: "440px",
     boxSizing: "border-box",
-    border: "1px solid #e2e8f0",
-    borderRadius: "42px",
-    boxShadow: "0 12px 30px rgba(15, 23, 42, 0.08)",
+    border: "1px solid rgba(148, 163, 184, 0.35)",
+    borderRadius: "28px",
+    boxShadow: "0 20px 45px rgba(15, 23, 42, 0.12)",
 };
 
 const inputStyle = {
     position: "relative",
     width: "100%",
-    backgroundColor: "#f8fafc",
-    border: "1px solid #d9e2f0",
+    backgroundColor: "#ffffff",
+    border: "1px solid #dbeafe",
     borderRadius: "12px",
     padding: "12px 14px",
     color: "#0f172a",
     outline: "none",
     boxSizing: "border-box",
     fontSize: "14px",
+    boxShadow: "inset 0 1px 2px rgba(148, 163, 184, 0.08)",
 };
 
 const Search = () => {
@@ -126,11 +125,12 @@ const Search = () => {
                     border: "none",
                     borderRadius: "12px",
                     padding: "12px 14px",
-                    background: "linear-gradient(90deg, #2563eb 0%, #3b82f6 100%)",
+                    background: "linear-gradient(90deg, #2563eb 0%, #4f46e5 100%)",
                     color: "#ffffff",
-                    fontWeight: 600,
+                    fontWeight: 700,
                     cursor: isLoading ? "not-allowed" : "pointer",
-                    boxShadow: "0 8px 16px rgba(37, 99, 235, 0.18)",
+                    boxShadow: "0 12px 24px rgba(59, 130, 246, 0.28)",
+                    letterSpacing: "0.2px",
                 }}
             >
                 {isLoading ? "Searching..." : "Find Buses"}

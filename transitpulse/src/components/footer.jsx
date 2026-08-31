@@ -6,9 +6,12 @@ const footerStyles = {
   bottom: 0,
   left: 0,
   right: 0,
-  height: '40px',
-  background: '#ffffff',
-  borderTop: '1px solid #ddd',
+  height: '48px',
+  background: 'rgba(255, 255, 255, 0.9)',
+  backdropFilter: 'blur(10px)',
+  WebkitBackdropFilter: 'blur(10px)',
+  borderTop: '1px solid rgba(148, 163, 184, 0.35)',
+  boxShadow: '0 -8px 24px rgba(15, 23, 42, 0.08)',
   display: 'flex',
   justifyContent: 'space-around',
   alignItems: 'center',
@@ -18,7 +21,7 @@ const footerStyles = {
 const buttonStyles = (active) => ({
   border: 'none',
   background: 'transparent',
-  color: active ? '#0078d4' : '#555',
+  color: active ? '#2563eb' : '#64748b',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -26,6 +29,8 @@ const buttonStyles = (active) => ({
   cursor: 'pointer',
   gap: '4px',
   padding: '8px 12px',
+  fontWeight: active ? 700 : 500,
+  transition: 'all 0.2s ease',
 });
 
 const iconStyles = {

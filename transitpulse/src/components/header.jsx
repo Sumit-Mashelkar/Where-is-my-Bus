@@ -13,7 +13,7 @@ const headerStyles = {
   justifyContent: "space-between",
   gap: "16px",
   zIndex: 1000,
-  boxShadow: "0 2px 8px rgba(16,24,40,0.06)",
+  boxShadow: "0 10px 8px rgba(16,24,40,0.06)",
   borderBottom: "1px solid rgba(16,24,40,0.04)",
   borderRadius: "0 0 22px 22px",
 };
