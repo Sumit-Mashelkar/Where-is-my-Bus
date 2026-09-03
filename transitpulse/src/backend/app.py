@@ -196,6 +196,19 @@ def allRoutes():
 def reportBus():
     print("reported a bus")
     report = request.get_json()
+
+    connection = sqlite3.connect("transitpulse.db")
+    cursor = connection.cursor()
+
+    cursor.execute(
+        """
+        INSERT INTO bus_reports (bus_number, current_Stop, direction, status)
+        VALUES (?, ?, ?, ?)
+        """,
+        (report["bus_number"], report["current_Stop"], report["direction"], report["status"])
+    )
+    connection.commit()
+    connection.close()
     return {
         "message": "Bus report received",
         "report": report
