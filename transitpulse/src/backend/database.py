@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS buses (
     from_city TEXT,
     to_city TEXT,
     departure TEXT
+    
 )
 """)
 
@@ -84,6 +85,18 @@ for bus_number, stops in route_stops.items():
                 """,
                 (bus_id, stop_order, stop_name, arrival_time)
             )
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS bus_reports (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    bus_number TEXT,
+    current_Stop TEXT,
+    direction TEXT,
+    status TEXT,
+    vote INTEGER DEFAULT 0,
+    status TEXT DEFAULT 'unverified'
+)
+""")
 
 connection.commit()
 connection.close()
