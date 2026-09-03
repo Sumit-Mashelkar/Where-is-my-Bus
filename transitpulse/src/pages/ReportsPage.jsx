@@ -1,9 +1,8 @@
 // contains all bus reports
 import Hero from "../components/header";
 import Footer from "../components/footer";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
 
 
 const mainStyle = {
@@ -11,8 +10,7 @@ const mainStyle = {
     justifyContent: "center",
     alignItems: "center",
     minHeight: "30vh",
-
-    
+  
 }
 
 const reportbusform = {
@@ -62,20 +60,44 @@ const ReportBusPage = () => {
     const [stopName, setStopName] = useState("")
     const [status, setStatus] = useState("")
     const [description, setDescription] = useState("")
+    const [isSending, setIsSending] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
 
-    const handleClick = () => {
-        if (busName && stopName && status && description) {
-        console.log("running")
-        navigate("/", {
-            state: 
-            {bus: busName,
+    const handleSubmit = async (event) => {
+        event.preventDefault()
 
+        if (busName.trim() && stopName.trim() && status.trim() && description.trim()) {
+        setIsSending(true)
+        setErrorMessage("")
+
+        try {
+            const response = await fetch("http://127.0.0.1:5000/reportBus", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                bus: busName.trim(),
+                stop: stopName.trim(),
+                status: status.trim(),
+                description: description.trim(),
+            }),
+            })
+
+            if (!response.ok) {
+                throw new Error("Bus report request failed")
+            }
+
+            await response.json()
+            navigate("/")
+        } catch (error) {
+            console.error(error);
+            setErrorMessage("Unable to report a bus. Please try again.")
+        } finally {
+            setIsSending(false)
         }
-            
-        })
-        }
-        else {
-            navigate("/error");
+        } else {
+            setErrorMessage("Please complete all fields before submitting.")
         }
     };
 
@@ -85,7 +107,7 @@ const ReportBusPage = () => {
         <div>report a bus</div>
         {/* <p>1: bus name, 2: display currrent time, 3: fetch the route/stops for busname, 4: current stop, 5: current status, 6: short description (optional) </p> */}
         <main style={mainStyle}>
-            <form id = "report-bus-form" style={reportbusform}>
+            <form id = "report-bus-form" style={reportbusform} onSubmit={handleSubmit}>
                 <input type="text" 
                 placeholder="Bus Name" 
                 value={busName}
@@ -110,7 +132,10 @@ const ReportBusPage = () => {
                 style={inputStyle}
                 onChange={(e) => {setDescription(e.target.value)}}/>
 
-                <button style={buttonStyle} onClick={handleClick}>submit</button>
+                <button type="submit" style={buttonStyle} disabled={isSending}>
+                    {isSending ? "Submitting..." : "Submit"}
+                </button>
+                {errorMessage && <p role="alert">{errorMessage}</p>}
                  
             </form>
         </main>
@@ -119,5 +144,4 @@ const ReportBusPage = () => {
         
     )
 }
-
 export default ReportBusPage;
