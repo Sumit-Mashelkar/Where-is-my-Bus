@@ -192,7 +192,14 @@ def allRoutes():
     
     return(routes)
 
-
+@app.route("/reportBus", methods=["POST"])
+def reportBus():
+    print("reported a bus")
+    report = request.get_json()
+    return {
+        "message": "Bus report received",
+        "report": report
+    }, 201
     
 if __name__ == "__main__":
     app.run(debug=True)
