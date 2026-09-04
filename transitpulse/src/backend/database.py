@@ -1,6 +1,8 @@
+from pathlib import Path
 import sqlite3
 
-connection = sqlite3.connect("transitpulse.db")
+database_path = Path(__file__).with_name("transitpulse.db")
+connection = sqlite3.connect(database_path)
 
 cursor = connection.cursor()
 
@@ -86,6 +88,8 @@ for bus_number, stops in route_stops.items():
                 (bus_id, stop_order, stop_name, arrival_time)
             )
 
+            
+# contains all the bus reports
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS bus_reports (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -93,10 +97,24 @@ CREATE TABLE IF NOT EXISTS bus_reports (
     current_Stop TEXT,
     direction TEXT,
     status TEXT,
-    vote INTEGER DEFAULT 0,
-    status TEXT DEFAULT 'unverified'
+    vote INTEGER DEFAULT 0
 )
 """)
+
+
+# verified history of bus reports
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS bus_reports_history (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    bus_number TEXT,
+    current_Stop TEXT,
+    direction TEXT,
+    status TEXT,
+    vote INTEGER DEFAULT 0,
+    verified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+""")
+
 
 connection.commit()
 connection.close()

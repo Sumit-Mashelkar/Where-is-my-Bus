@@ -1,8 +1,11 @@
+from pathlib import Path
+
 from flask import Flask, request
 from flask_cors import CORS
 import sqlite3
 
 app = Flask(__name__)
+DATABASE_PATH = Path(__file__).with_name("transitpulse.db")
 
 CORS(app)
 @app.route("/")
@@ -48,7 +51,7 @@ def get_routes():
 @app.route("/buses")
 def get_buses():
 
-    connection = sqlite3.connect("transitpulse.db")
+    connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
 
     cursor.execute("SELECT * FROM buses")
@@ -82,7 +85,7 @@ def search():
     from_city = data["from"]
     to_city = data["to"]
 
-    connection = sqlite3.connect("transitpulse.db")
+    connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
 
     cursor.execute(
@@ -118,7 +121,7 @@ def search():
 @app.route("/BusDetails/<int:bus_id>")
 def get_bus_details(bus_id):
 
-    connection = sqlite3.connect("transitpulse.db")
+    connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
 
     cursor.execute(
@@ -167,7 +170,7 @@ def get_bus_details(bus_id):
 @app.route("/allRoutes")
 def allRoutes():
 
-    connection = sqlite3.connect("transitpulse.db")
+    connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
 
     cursor.execute(
@@ -195,9 +198,17 @@ def allRoutes():
 @app.route("/reportBus", methods=["POST"])
 def reportBus():
     print("reported a bus")
-    report = request.get_json()
+    report = request.get_json(silent=True) or {}
+    required_fields = ("bus_number", "current_Stop", "direction", "status")
+    missing_fields = [field for field in required_fields if not str(report.get(field, "")).strip()]
 
-    connection = sqlite3.connect("transitpulse.db")
+    if missing_fields:
+        return {
+            "error": "Missing required fields",
+            "fields": missing_fields
+        }, 400
+
+    connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
 
     cursor.execute(
