@@ -2,9 +2,14 @@
   "name": "where-is-my-bus",
   "version": "1.0.0",
   "description": "A crowd sourced bus tracking  application",
-  "main": "main.jsx",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "frontend:dev": "npm --prefix frontend run dev",
+    "frontend:build": "npm --prefix frontend run build",
+    "frontend:lint": "npm --prefix frontend run lint",
+    "backend:start": "python backend/app.py",
+    "backend:setup": "python backend/database.py",
+    "backend:test": "python -m unittest discover -s backend -p \"test_*.py\""
   },
   "repository": {
     "type": "git",
