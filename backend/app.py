@@ -224,6 +224,35 @@ def reportBus():
         "message": "Bus report received",
         "report": report
     }, 201
+
     
+
+@app.route("/getAllBusReports", methods=["GET"])
+def getAllBusReports():
+    connection = sqlite3.connect(DATABASE_PATH)
+    cursor = connection.cursor()
+
+    cursor.execute(
+        """
+        SELECT * FROM bus_reports
+        """
+    )
+
+    result = cursor.fetchall()
+    connection.close()
+
+    if (result):
+        reports=[]
+        for row in result:
+            report = {
+                "id": row[0],
+                "bus_number": row[1],
+                "current_Stop": row[2],
+                "direction": row[3],
+                "status": row[4]
+            }
+            reports.append(report)
+    
+    return(reports)
 if __name__ == "__main__":
     app.run(debug=True)
