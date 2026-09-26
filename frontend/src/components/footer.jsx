@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Updates from '../pages/Updates';
 
 const footerStyles = {
   position: 'fixed',
@@ -65,7 +66,8 @@ function Footer({ onNavigate }) {
       navigate("/allRoutes");
     }
     else if (id === 'updates'){
-      navigate("/error");
+      navigate("/Updates");
+      
     }
     else if (id === 'profile'){
       navigate("/error");

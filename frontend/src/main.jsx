@@ -10,6 +10,7 @@ import BusDetailsPage from './pages/BusDetailsPage.jsx'
 import AllRoutesPage from './pages/allroutesPage.jsx'
 import AddRoutesPage from './pages/AddRoutesPage.jsx'
 import ReportBusPage from './pages/ReportsPage.jsx'
+import Updates from './pages/Updates.jsx'
 
 const root = createRoot(document.getElementById('root'))
 root.render(
@@ -24,6 +25,7 @@ root.render(
             <Route path="/allRoutes" element={<AllRoutesPage />}/>
             <Route path="/report-bus" element={<ReportBusPage />} />
             <Route path="/add-route" element={<AddRoutesPage />} />
+            <Route path="/Updates" element={<Updates />} />
           </Routes>
     </Router>
   </StrictMode>,
