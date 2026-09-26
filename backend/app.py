@@ -235,7 +235,7 @@ def getAllBusReports():
     cursor.execute(
         """
         SELECT * FROM bus_reports
-        """
+        """    
     )
 
     result = cursor.fetchall()
@@ -254,5 +254,28 @@ def getAllBusReports():
             reports.append(report)
     
     return(reports)
+
+
+
+@app.route("/Updates", methods=["GET"])
+def getUpdates():
+    print("finding the latest updates..")
+
+    connection = sqlite3.connect(DATABASE_PATH)
+    cursor = connection.cursor()
+    
+    cursor.execute(
+            """
+            SELECT * FROM bus_reports
+            """    
+        )
+    
+    result = cursor.fetchall()
+    connection.close()
+
+    return(result)
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)
