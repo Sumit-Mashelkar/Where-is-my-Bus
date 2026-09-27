@@ -167,6 +167,7 @@ def get_bus_details(bus_id):
         ]
     }
 
+# fetches all the routes from buses table
 @app.route("/allRoutes")
 def allRoutes():
 
@@ -175,7 +176,7 @@ def allRoutes():
 
     cursor.execute(
         """
-        SELECT * FROM buses
+        SELECT * FROM route_stops
         """
     )
 
@@ -187,9 +188,7 @@ def allRoutes():
             route = {
                 "id": row[0],
                 "bus_number": row[1],
-                "from_city": row[2],
-                "to_city": row[3],
-                "departure": row[4]
+                "stop_order": row[2]  
             }
             routes.append(route)
     

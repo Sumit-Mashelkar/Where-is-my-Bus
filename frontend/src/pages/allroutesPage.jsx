@@ -41,9 +41,9 @@ const AllRoutesPage = () => {
                     <div key={bus.id}>
                         <p>{bus.id}</p>
                         <p>{bus.bus_number}</p>
-                        <div>From: {bus.from_city}</div>
-                        <div>To: {bus.to_city}</div>
-                        <div>Departure: {bus.departure}</div>
+                        <div>stop_order: {bus.stop_order}</div>
+                        {/* <div>To: {bus.to_city}</div>
+                        <div>Departure: {bus.departure}</div> */}
                     </div>
                 ))
             )}
