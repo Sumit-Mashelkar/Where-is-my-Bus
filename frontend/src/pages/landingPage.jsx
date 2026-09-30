@@ -8,12 +8,12 @@ const LandingPage = () => {
     
 
     return (
-        <>
+        <main className="landing-page">
             <Hero />
             <Search />
             <QuickAcess />
             <Footer />
-        </>
+        </main>
     );
 };
  

@@ -1,7 +1,7 @@
 
 //styles for the header and text
 const headerStyles = {
-  backgroundColor: "#ffffff",
+  backgroundColor: "#cfe8df",
   padding: "12px 20px",
   left: 0,
   right: 0,

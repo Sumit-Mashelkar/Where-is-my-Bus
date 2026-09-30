@@ -110,6 +110,11 @@ body {
   overflow-x: hidden;
 }
 
+.landing-page {
+  flex: 1;
+  background-color: #e8f3ef;
+}
+
 h1,
 h2 {
   font-family: var(--heading);
