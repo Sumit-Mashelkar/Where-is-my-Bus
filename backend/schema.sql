@@ -1,0 +1,14 @@
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users (
+    id serial PRIMARY KEY,
+    username VARCHAR(30) NOT NULL,
+    email VARCHAR(40) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE BUSES (
+    id INTEGER PRIMARY kEY AUTOINCREMENT,
+    bus_name VARCHAR(50),
+    route_name VARCAHAR(50),
+);
