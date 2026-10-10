@@ -4,6 +4,8 @@ from pathlib import Path
 import psycopg
 from dotenv import load_dotenv
 
+
+
 # Keep the local settings and schema path beside this file.
 BACKEND_DIR = Path(__file__).resolve().parent
 load_dotenv(BACKEND_DIR / ".env")

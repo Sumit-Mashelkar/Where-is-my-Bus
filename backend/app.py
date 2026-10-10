@@ -1,11 +1,9 @@
-from pathlib import Path
-
 from flask import Flask, request
 from flask_cors import CORS
-import sqlite3
+
+from database import get_connection
 
 app = Flask(__name__)
-DATABASE_PATH = Path(__file__).with_name("transitpulse.db")
 
 CORS(app)
 @app.route("/")
@@ -47,11 +45,32 @@ def get_routes():
     }
 
 
+@app.route("/destinations")
+def get_destinations():
+    query = request.args.get("q", "").strip()
+    if not query:
+        return []
+
+    with get_connection() as connection:
+        rows = connection.execute(
+            """
+            SELECT DISTINCT to_city
+            FROM buses
+            WHERE to_city ILIKE %s
+            ORDER BY to_city
+            LIMIT 8
+            """,
+            (f"{query}%",),
+        ).fetchall()
+
+    return [row[0] for row in rows]
+
+
 #load buses from database
 @app.route("/buses")
 def get_buses():
 
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute("SELECT * FROM buses")
@@ -85,14 +104,14 @@ def search():
     from_city = data["from"]
     to_city = data["to"]
 
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute(
         """
         SELECT * FROM buses
-        WHERE from_city = ?
-        AND to_city = ?
+        WHERE from_city = %s
+        AND to_city = %s
         """,
         (from_city, to_city)
     )
@@ -121,14 +140,13 @@ def search():
 @app.route("/BusDetails/<int:bus_id>")
 def get_bus_details(bus_id):
 
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute(
         """
         SELECT * FROM buses
-        WHERE id = 
-        ?
+        WHERE id = %s
         """,
         (bus_id,)
     )
@@ -143,7 +161,7 @@ def get_bus_details(bus_id):
         """
         SELECT stop_order, stop_name, arrival_time
         FROM route_stops
-        WHERE bus_id = ?
+        WHERE bus_id = %s
         ORDER BY stop_order
         """,
         (bus_id,)
@@ -171,12 +189,15 @@ def get_bus_details(bus_id):
 @app.route("/allRoutes")
 def allRoutes():
 
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute(
         """
-        SELECT * FROM route_stops
+        SELECT route_stops.id, buses.bus_number, route_stops.stop_order
+        FROM route_stops
+        JOIN buses ON buses.id = route_stops.bus_id
+        ORDER BY buses.id, route_stops.stop_order
         """
     )
 
@@ -207,13 +228,13 @@ def reportBus():
             "fields": missing_fields
         }, 400
 
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute(
         """
         INSERT INTO bus_reports (bus_number, current_Stop, direction, status)
-        VALUES (?, ?, ?, ?)
+        VALUES (%s, %s, %s, %s)
         """,
         (report["bus_number"], report["current_Stop"], report["direction"], report["status"])
     )
@@ -228,7 +249,7 @@ def reportBus():
 
 @app.route("/getAllBusReports", methods=["GET"])
 def getAllBusReports():
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
 
     cursor.execute(
@@ -260,7 +281,7 @@ def getAllBusReports():
 def getUpdates():
     print("finding the latest updates..")
 
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
     
     cursor.execute(
