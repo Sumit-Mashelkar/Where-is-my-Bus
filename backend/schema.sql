@@ -57,17 +57,17 @@ ON CONFLICT (bus_number) DO NOTHING;
 INSERT INTO route_stops (bus_id, stop_order, stop_name, arrival_time)
 SELECT buses.id, stops.stop_order, stops.stop_name, stops.arrival_time
 FROM (VALUES
-    ('101', 1, 'Bengaluru', '08:30'),
-    ('101', 2, 'Mandya', '09:35'),
-    ('101', 3, 'Mysuru', '10:45'),
-    ('205', 1, 'Bengaluru', '09:15'),
-    ('205', 2, 'Ramanagara', '10:00'),
-    ('205', 3, 'Mandya', '10:35'),
-    ('205', 4, 'Mysuru', '11:30'),
-    ('310', 1, 'Bengaluru', '10:00'),
-    ('310', 2, 'Tumakuru', '11:10'),
-    ('310', 3, 'Chitradurga', '13:00'),
-    ('310', 4, 'Hubballi', '15:20')
+    ('KA30123', 1, 'Bengaluru', '08:30'),
+    ('KA30123', 2, 'Mandya', '09:35'),
+    ('KA30123', 3, 'Mysuru', '10:45'),
+    ('KA30499', 1, 'Bengaluru', '09:15'),
+    ('KA30499', 2, 'Ramanagara', '10:00'),
+    ('KA30499', 3, 'Mandya', '10:35'),
+    ('KA30499', 4, 'Mysuru', '11:30'),
+    ('KA30373', 1, 'Bengaluru', '10:00'),
+    ('KA30373', 2, 'Tumakuru', '11:10'),
+    ('KA30373', 3, 'Chitradurga', '13:00'),
+    ('KA30373', 4, 'Hubballi', '15:20')
 ) AS stops(bus_number, stop_order, stop_name, arrival_time)
 JOIN buses ON buses.bus_number = stops.bus_number
 ON CONFLICT (bus_id, stop_order) DO NOTHING;
