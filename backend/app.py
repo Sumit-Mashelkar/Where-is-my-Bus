@@ -66,33 +66,65 @@ def get_destinations():
     return [row[0] for row in rows]
 
 
-#load buses from database
-@app.route("/buses")
+def bus_to_dict(row):
+    return {
+        "id": row[0],
+        "bus_number": row[1],
+        "bus_name": row[2],
+        "from_city": row[3],
+        "to_city": row[4],
+        "departure": str(row[5])[:5],
+    }
+
+
+@app.route("/buses", methods=["POST"])
+def create_bus():
+    data = request.get_json(silent=True) or {}
+    required_fields = ("bus_name", "bus_number", "from_city", "to_city", "departure")
+    values = {
+        field: str(data.get(field) or "").strip()
+        for field in required_fields
+    }
+    missing_fields = [field for field, value in values.items() if not value]
+
+    if missing_fields:
+        return {"error": "Missing required fields", "fields": missing_fields}, 400
+
+    with get_connection() as connection:
+        row = connection.execute(
+            """
+            INSERT INTO buses (bus_name, bus_number, from_city, to_city, departure)
+            VALUES (%s, %s, %s, %s, %s)
+            ON CONFLICT DO NOTHING
+            RETURNING id, bus_number, bus_name, from_city, to_city, departure
+            """,
+            (
+                values["bus_name"],
+                values["bus_number"],
+                values["from_city"],
+                values["to_city"],
+                values["departure"],
+            ),
+        ).fetchone()
+
+    if not row:
+        return {"error": "A bus with that name or number already exists"}, 409
+
+    return bus_to_dict(row), 201
+
+
+@app.route("/buses", methods=["GET"])
 def get_buses():
+    with get_connection() as connection:
+        rows = connection.execute(
+            """
+            SELECT id, bus_number, bus_name, from_city, to_city, departure
+            FROM buses
+            ORDER BY id
+            """
+        ).fetchall()
 
-    connection = get_connection()
-    cursor = connection.cursor()
-
-    cursor.execute("SELECT * FROM buses")
-
-    rows = cursor.fetchall()
-
-    connection.close()
-
-    buses = []
-
-    for row in rows:
-        bus = {
-            "id": row[0],
-            "bus_number": row[1],
-            "from_city": row[2],
-            "to_city": row[3],
-            "departure": row[4]
-        }
-
-        buses.append(bus)
-
-    return buses
+    return [bus_to_dict(row) for row in rows]
 
 
 #search buses based on from and to cities
@@ -104,77 +136,49 @@ def search():
     from_city = data["from"]
     to_city = data["to"]
 
-    connection = get_connection()
-    cursor = connection.cursor()
+    with get_connection() as connection:
+        rows = connection.execute(
+            """
+            SELECT id, bus_number, bus_name, from_city, to_city, departure
+            FROM buses
+            WHERE from_city = %s AND to_city = %s
+            ORDER BY departure
+            """,
+            (from_city, to_city),
+        ).fetchall()
 
-    cursor.execute(
-        """
-        SELECT * FROM buses
-        WHERE from_city = %s
-        AND to_city = %s
-        """,
-        (from_city, to_city)
-    )
-
-    rows = cursor.fetchall()
-
-    connection.close()
-
-    buses = []
-
-    for row in rows:
-        bus = {
-            "id": row[0],
-            "bus_number": row[1],
-            "from_city": row[2],
-            "to_city": row[3],
-            "departure": row[4]
-        }
-
-        buses.append(bus)
-
-    return buses
+    return [bus_to_dict(row) for row in rows]
 
 
 #fetch bus details based on bus id fetched from the URL
 @app.route("/BusDetails/<int:bus_id>")
 def get_bus_details(bus_id):
 
-    connection = get_connection()
-    cursor = connection.cursor()
+    with get_connection() as connection:
+        row = connection.execute(
+            """
+            SELECT id, bus_number, bus_name, from_city, to_city, departure
+            FROM buses
+            WHERE id = %s
+            """,
+            (bus_id,),
+        ).fetchone()
 
-    cursor.execute(
-        """
-        SELECT * FROM buses
-        WHERE id = %s
-        """,
-        (bus_id,)
-    )
+        if not row:
+            return {"error": "Bus not found"}, 404
 
-    row = cursor.fetchone()
-
-    if not row:
-        connection.close()
-        return {"error": "Bus not found"}, 404
-
-    cursor.execute(
-        """
-        SELECT stop_order, stop_name, arrival_time
-        FROM route_stops
-        WHERE bus_id = %s
-        ORDER BY stop_order
-        """,
-        (bus_id,)
-    )
-    stop_rows = cursor.fetchall()
-    connection.close()
+        stop_rows = connection.execute(
+            """
+            SELECT stop_order, stop_name, arrival_time
+            FROM route_stops
+            WHERE bus_id = %s
+            ORDER BY stop_order
+            """,
+            (bus_id,),
+        ).fetchall()
 
     return {
-        "id": row[0],
-        "bus_number": row[1],
-        "from_city": row[2],
-        "to_city": row[3],
-        "departure": row[4],
+        **bus_to_dict(row),
         "stops": [
             {
                 "order": stop[0],
@@ -194,7 +198,7 @@ def allRoutes():
 
     cursor.execute(
         """
-        SELECT route_stops.id, buses.bus_number, route_stops.stop_order
+        SELECT route_stops.id, buses.bus_number, buses.bus_name, route_stops.stop_order
         FROM route_stops
         JOIN buses ON buses.id = route_stops.bus_id
         ORDER BY buses.id, route_stops.stop_order
@@ -209,7 +213,8 @@ def allRoutes():
             route = {
                 "id": row[0],
                 "bus_number": row[1],
-                "stop_order": row[2]  
+                "bus_name": row[2],
+                "stop_order": row[3]
             }
             routes.append(route)
     
@@ -217,10 +222,13 @@ def allRoutes():
 
 @app.route("/reportBus", methods=["POST"])
 def reportBus():
-    print("reported a bus")
     report = request.get_json(silent=True) or {}
     required_fields = ("bus_number", "current_Stop", "direction", "status")
-    missing_fields = [field for field in required_fields if not str(report.get(field, "")).strip()]
+    values = {
+        field: str(report.get(field) or "").strip()
+        for field in required_fields
+    }
+    missing_fields = [field for field, value in values.items() if not value]
 
     if missing_fields:
         return {
@@ -228,52 +236,70 @@ def reportBus():
             "fields": missing_fields
         }, 400
 
-    connection = get_connection()
-    cursor = connection.cursor()
+    with get_connection() as connection:
+        bus = connection.execute(
+            "SELECT id FROM buses WHERE bus_number = %s",
+            (values["bus_number"],),
+        ).fetchone()
 
-    cursor.execute(
-        """
-        INSERT INTO bus_reports (bus_number, current_Stop, direction, status)
-        VALUES (%s, %s, %s, %s)
-        """,
-        (report["bus_number"], report["current_Stop"], report["direction"], report["status"])
-    )
-    connection.commit()
-    connection.close()
+        if not bus:
+            return {"error": "Bus not found"}, 404
+
+        stop = connection.execute(
+            """
+            SELECT id FROM route_stops
+            WHERE bus_id = %s AND LOWER(stop_name) = LOWER(%s)
+            """,
+            (bus[0], values["current_Stop"]),
+        ).fetchone()
+
+        if not stop:
+            return {"error": "Stop not found on this bus route"}, 400
+
+        report_row = connection.execute(
+            """
+            INSERT INTO bus_reports (bus_id, current_stop_id, direction, updates)
+            VALUES (%s, %s, %s, %s)
+            RETURNING id
+            """,
+            (bus[0], stop[0], values["direction"], values["status"]),
+        ).fetchone()
+
     return {
         "message": "Bus report received",
-        "report": report
+        "report_id": report_row[0],
+        "report": values,
     }, 201
 
     
 
 @app.route("/getAllBusReports", methods=["GET"])
 def getAllBusReports():
-    connection = get_connection()
-    cursor = connection.cursor()
+    with get_connection() as connection:
+        rows = connection.execute(
+            """
+                 SELECT reports.id, buses.bus_number, route_stops.stop_name,
+                     reports.direction, reports.updates, reports.vote,
+                   reports.created_at
+            FROM bus_reports AS reports
+            JOIN buses ON buses.id = reports.bus_id
+                 LEFT JOIN route_stops ON route_stops.id = reports.current_stop_id
+            ORDER BY reports.created_at DESC
+            """
+        ).fetchall()
 
-    cursor.execute(
-        """
-        SELECT * FROM bus_reports
-        """    
-    )
-
-    result = cursor.fetchall()
-    connection.close()
-
-    if (result):
-        reports=[]
-        for row in result:
-            report = {
-                "id": row[0],
-                "bus_number": row[1],
-                "current_Stop": row[2],
-                "direction": row[3],
-                "status": row[4]
-            }
-            reports.append(report)
-    
-    return(reports)
+    return [
+        {
+            "id": row[0],
+            "bus_number": row[1],
+            "current_Stop": row[2],
+            "direction": row[3],
+            "status": row[4],
+            "vote": row[5],
+            "created_at": row[6].isoformat(),
+        }
+        for row in rows
+    ]
 
 
 

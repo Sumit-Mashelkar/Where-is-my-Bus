@@ -49,6 +49,9 @@ CREATE TABLE IF NOT EXISTS bus_reports_history (
     verified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+
+
+-- seed data 
 INSERT INTO buses (bus_name, bus_number, from_city, to_city, departure)
 VALUES
     ('mysuru', 'KA30123', 'Bengaluru', 'Mysuru', '08:30'),
