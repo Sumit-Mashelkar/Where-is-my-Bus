@@ -147,8 +147,7 @@ const Search = () => {
                     }}
                 />
                 {destinationSuggestions.filter(
-                    (destination) => destination.toLowerCase() !== toInputValue.trim().toLowerCase()
-                ).length > 0 && (
+                    (destination) => destination.toLowerCase() !== toInputValue.trim().toLowerCase()).length > 0 && (
                     <ul
                         role="listbox"
                         aria-label="Matching destinations"
@@ -161,7 +160,7 @@ const Search = () => {
                             margin: "4px 0 0",
                             padding: "4px",
                             listStyle: "none",
-                            background: "#ffffff",
+                            background: "#abc6ee",
                             border: "1px solid #dbeafe",
                             borderRadius: "8px",
                             boxShadow: "0 8px 20px rgba(15, 23, 42, 0.12)",
@@ -169,12 +168,12 @@ const Search = () => {
                     >
                         {destinationSuggestions
                             .filter((destination) => destination.toLowerCase() !== toInputValue.trim().toLowerCase())
-                            .map((destination) => (
-                                <li key={destination} role="option" aria-selected="false">
+                            .map((sorted_destination) => (
+                                <li key={sorted_destination} role="option" aria-selected="false">
                                     <button
                                         type="button"
                                         onClick={() => {
-                                            setToInputValue(destination);
+                                            setToInputValue(sorted_destination);
                                             setDestinationSuggestions([]);
                                         }}
                                         style={{
@@ -188,7 +187,7 @@ const Search = () => {
                                             cursor: "pointer",
                                         }}
                                     >
-                                        {destination}
+                                        {sorted_destination}
                                     </button>
                                 </li>
                             ))}
