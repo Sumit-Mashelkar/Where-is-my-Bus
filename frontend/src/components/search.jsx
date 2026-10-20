@@ -75,6 +75,38 @@ const Search = () => {
         return () => controller.abort();
     }, [toInputValue]);
 
+    useEffect(() => {
+        const query = fromInputValue.trim();
+        if (!query) {
+            return undefined;
+        }
+
+        const controller = new AbortController();
+
+        const fetchOrigins = async () => {
+            try {
+                const response = await fetch(
+                    `http://127.0.0.1:5000/origins?q=${encodeURIComponent(query)}`,
+                    { signal: controller.signal }
+                );
+
+                if (!response.ok) {
+                    throw new Error("Origin request failed");
+                }
+
+                setOriginSuggestions(await response.json());
+            } catch (error) {
+                if (error.name !== "AbortError") {
+                    console.error(error);
+                    setOriginSuggestions([]);
+                }
+            }
+        };
+
+        fetchOrigins();
+        return () => controller.abort();
+    }, [fromInputValue]);
+
     const handleSearch = async () => {
         //handles edge case where user clicks search without entering both origin and destination
         if (!fromInputValue.trim() || !toInputValue.trim()) {
@@ -125,15 +157,65 @@ const Search = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
         >
-            <div className="from-search-div">
+            <div className="from-search-div" style={{ position: "relative", width: "100%" }}>
                 <input
                     className="from-input"
                     style={inputStyle}
                     type="text"
                     placeholder="starting from.."
                     value={fromInputValue}
-                    onChange={(e) => setFromInputValue(e.target.value)}
+                    onChange={(e) => {
+                        setOriginSuggestions([]);
+                        setFromInputValue(e.target.value);
+                    }}
                 />
+                {originSuggestions.filter(
+                    (origin) => origin.toLowerCase() !== fromInputValue.trim().toLowerCase()).length > 0 && (
+                    <ul
+                        role="listbox"
+                        aria-label="Matching origins"
+                        style={{
+                            position: "absolute",
+                            top: "100%",
+                            left: 0,
+                            right: 0,
+                            zIndex: 2,
+                            margin: "4px 0 0",
+                            padding: "4px",
+                            listStyle: "none",
+                            background: "#abc6ee",
+                            border: "1px solid #dbeafe",
+                            borderRadius: "8px",
+                            boxShadow: "0 8px 20px rgba(15, 23, 42, 0.12)",
+                        }}
+                    >
+                        {originSuggestions
+                            .filter((origin) => origin.toLowerCase() !== fromInputValue.trim().toLowerCase())
+                            .map((origin) => (
+                                <li key={origin} role="option" aria-selected="false">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setFromInputValue(origin);
+                                            setOriginSuggestions([]);
+                                        }}
+                                        style={{
+                                            width: "100%",
+                                            padding: "9px 10px",
+                                            border: 0,
+                                            borderRadius: "4px",
+                                            background: "transparent",
+                                            color: "#0f172a",
+                                            textAlign: "left",
+                                            cursor: "pointer",
+                                        }}
+                                    >
+                                        {origin}
+                                    </button>
+                                </li>
+                            ))}
+                    </ul>
+                )}
             </div>
             <div className="to-search-div" style={{ position: "relative", width: "100%" }}>
                 <input
