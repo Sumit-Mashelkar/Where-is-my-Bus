@@ -18,6 +18,26 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(response.json[0]["bus_number"], "KA30373")
 
     @patch("app.get_connection")
+    def test_origins_returns_matching_origin_cities(self, get_connection):
+        connection = Mock()
+        connection.__enter__ = Mock(return_value=connection)
+        connection.__exit__ = Mock(return_value=False)
+        connection.execute.return_value.fetchall.return_value = [
+            ("Bengaluru",),
+            ("Belagavi",),
+        ]
+        get_connection.return_value = connection
+
+        response = self.client.get("/origins?q=Be")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, ["Bengaluru", "Belagavi"])
+        self.assertEqual(
+            connection.execute.call_args.args[1],
+            ("Be%",),
+        )
+
+    @patch("app.get_connection")
     def test_create_bus_saves_and_returns_bus_name(self, get_connection):
         connection = Mock()
         connection.__enter__ = Mock(return_value=connection)

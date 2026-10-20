@@ -66,6 +66,27 @@ def get_destinations():
     return [row[0] for row in rows]
 
 
+@app.route("/origins")
+def get_origins():
+    query = request.args.get("q", "").strip()
+    if not query:
+        return []
+
+    with get_connection() as connection:
+        rows = connection.execute(
+            """
+            SELECT DISTINCT from_city
+            FROM buses
+            WHERE from_city ILIKE %s
+            ORDER BY from_city
+            LIMIT 8
+            """,
+            (f"{query}%",),
+        ).fetchall()
+
+    return [row[0] for row in rows]
+
+
 def bus_to_dict(row):
     return {
         "id": row[0],
