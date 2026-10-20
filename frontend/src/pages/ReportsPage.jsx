@@ -77,7 +77,7 @@ const ReportBusPage = () => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                bus_number: busName.trim(),
+                bus_name: busName.trim(),
                 current_Stop: stopName.trim(),
                 direction: direction.trim(),
                 status: status.trim(),
@@ -113,6 +113,7 @@ const ReportBusPage = () => {
                 value={busName}
                 style={inputStyle}
                 onChange={(e) => {setBusName(e.target.value)}}/>
+
 
                 <input type="text" 
                 placeholder="stop name" 

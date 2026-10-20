@@ -36,6 +36,7 @@ const inputStyle = {
 const Search = () => {
     const [fromInputValue, setFromInputValue] = useState("");
     const [toInputValue, setToInputValue] = useState("");
+    const [originSuggestions, setOriginSuggestions] = useState([]);
     const [destinationSuggestions, setDestinationSuggestions] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
