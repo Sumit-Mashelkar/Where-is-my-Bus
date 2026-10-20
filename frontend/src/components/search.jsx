@@ -157,7 +157,7 @@ const Search = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
         >
-            <div className="from-search-div" style={{ position: "relative", width: "100%" }}>
+            <div className="from-search-div" aria-label="origin" style={{ position: "relative", width: "100%" }}>
                 <input
                     className="from-input"
                     style={inputStyle}
@@ -217,7 +217,42 @@ const Search = () => {
                     </ul>
                 )}
             </div>
-            <div className="to-search-div" style={{ position: "relative", width: "100%" }}>
+            <button
+                type="button"
+                aria-label="Swap origin and destination"
+                title="Swap origin and destination"
+                onClick={() => {
+                    setFromInputValue(toInputValue);
+                    setToInputValue(fromInputValue);
+                    setOriginSuggestions([]);
+                    setDestinationSuggestions([]);
+                }}
+                style={{
+                    width: "36px",
+                    height: "36px",
+                    flexShrink: 0,
+                    display: "grid",
+                    placeItems: "center",
+                    padding: 0,
+                    border: "1px solid #dbeafe",
+                    borderRadius: "50%",
+                    background: "#ffffff",
+                    color: "#2563eb",
+                    cursor: "pointer",
+                    boxShadow: "0 2px 8px rgba(15, 23, 42, 0.08)",
+                }}
+            >
+                <svg
+                    aria-hidden="true"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                >
+                    <path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3 5 6.99h3V14h2V6.99h3L9 3z" />
+                </svg>
+            </button>
+            <div className="to-search-div" aria-label="destination" style={{ position: "relative", width: "100%" }}>
                 <input
                     className="to-input"
                     style={inputStyle}
