@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import Flask, request
 from flask_cors import CORS
 
@@ -111,12 +113,17 @@ def create_bus():
     if missing_fields:
         return {"error": "Missing required fields", "fields": missing_fields}, 400
 
+    try:
+        departure = datetime.strptime(values["departure"], "%H:%M").time()
+    except ValueError:
+        return {"error": "Departure must use HH:MM format"}, 400
+
     with get_connection() as connection:
         row = connection.execute(
             """
             INSERT INTO buses (bus_name, bus_number, from_city, to_city, departure)
             VALUES (%s, %s, %s, %s, %s)
-            ON CONFLICT DO NOTHING
+            ON CONFLICT (bus_number) DO NOTHING
             RETURNING id, bus_number, bus_name, from_city, to_city, departure
             """,
             (
@@ -124,12 +131,27 @@ def create_bus():
                 values["bus_number"],
                 values["from_city"],
                 values["to_city"],
-                values["departure"],
+                departure,
             ),
         ).fetchone()
 
+        if row:
+            connection.execute(
+                """
+                INSERT INTO route_stops (bus_id, stop_order, stop_name, arrival_time)
+                VALUES (%s, 1, %s, %s), (%s, 2, %s, NULL)
+                """,
+                (
+                    row[0],
+                    values["from_city"],
+                    values["departure"],
+                    row[0],
+                    values["to_city"],
+                ),
+            )
+
     if not row:
-        return {"error": "A bus with that name or number already exists"}, 409
+        return {"error": "A bus with that number already exists"}, 409
 
     return bus_to_dict(row), 201
 
@@ -244,10 +266,13 @@ def allRoutes():
 @app.route("/reportBus", methods=["POST"])
 def reportBus():
     report = request.get_json(silent=True) or {}
-    required_fields = ("bus_number", "current_Stop", "direction", "status")
     values = {
-        field: str(report.get(field) or "").strip()
-        for field in required_fields
+        "bus_number": str(report.get("bus_number") or "").strip(),
+        "current_stop": str(
+            report.get("current_stop") or report.get("current_Stop") or ""
+        ).strip(),
+        "direction": str(report.get("direction") or "").strip(),
+        "status": str(report.get("status") or "").strip(),
     }
     missing_fields = [field for field, value in values.items() if not value]
 
@@ -269,9 +294,9 @@ def reportBus():
         stop = connection.execute(
             """
             SELECT id FROM route_stops
-            WHERE bus_id = %s AND LOWER(stop_name) = LOWER(%s)
+            WHERE bus_id = %s AND LOWER(BTRIM(stop_name)) = LOWER(%s)
             """,
-            (bus[0], values["current_Stop"]),
+            (bus[0], values["current_stop"]),
         ).fetchone()
 
         if not stop:
