@@ -268,9 +268,7 @@ def reportBus():
     report = request.get_json(silent=True) or {}
     values = {
         "bus_number": str(report.get("bus_number") or "").strip(),
-        "current_stop": str(
-            report.get("current_stop") or report.get("current_Stop") or ""
-        ).strip(),
+        "current_stop": str(report.get("current_stop") or report.get("current_Stop") or "").strip(),
         "direction": str(report.get("direction") or "").strip(),
         "status": str(report.get("status") or "").strip(),
     }
