@@ -11,7 +11,8 @@ const Auth = () => {
         <h2>auth page</h2>
         <p>hello</p>
         </>
-    )
+    ) 
+    
 }
 
 export default Auth;
