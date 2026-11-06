@@ -1,3 +1,5 @@
+//import auth from "../pages/authenticationPage";
+import { useNavigate } from "react-router-dom";
 
 //styles for the header and text
 const headerStyles = {
@@ -34,9 +36,13 @@ const textStyles = {
 const Hero = () => {
   const heroText = "Transit Pulse";
 
+  const navigate = useNavigate();
+
   const handleClick = () => {
     // navigate to home
-    window.location.href = "/";
+    // window.location.href = "/auth";
+
+    navigate("/auth");
   };
 
   return (
@@ -63,7 +69,7 @@ const Hero = () => {
           boxShadow: "0 1px 2px rgba(2,6,23,0.2)",
         }}
       >
-        🔔
+        LOGIN
       </button>
     </header>
   );

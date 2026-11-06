@@ -11,6 +11,7 @@ const LandingPage = () => {
         <main className="landing-page">
             <Hero />
             <Search />
+        
             <QuickAcess />
             <Footer />
         </main>
