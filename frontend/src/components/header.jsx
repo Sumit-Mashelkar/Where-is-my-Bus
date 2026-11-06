@@ -38,12 +38,16 @@ const Hero = () => {
 
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleLoginClick = () => {
     // navigate to home
     // window.location.href = "/auth";
 
     navigate("/auth");
   };
+
+  const handleClick = () => {
+    navigate("/")
+  }
 
   return (
     <header className="center-text" style={headerStyles}>
@@ -53,7 +57,7 @@ const Hero = () => {
 
       <button
         aria-label="Notifications"
-        onClick={handleClick}
+        onClick={handleLoginClick}
         style={{
           cursor: "pointer",
           background: "#111827",
