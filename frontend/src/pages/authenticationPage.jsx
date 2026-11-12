@@ -5,13 +5,14 @@ import { useLocation } from "react-router-dom";
 
 
 const divStyle = {
-    margin: " 25px 20%",
+    margin: " 25px 20px",
     padding: "20px",
     postion: "sticky",
     top: "10px",
     bottom: 0,
     left: 0,
     right: 0,
+    backgroundColor: "#ffffff",
 }
 
 const buttonStyle = {
@@ -20,17 +21,19 @@ const buttonStyle = {
 }
 
 const formStyle = {
-    backgroundColor: "#ffffff",
+    background: "linear-gradient(90deg,rgb(206, 251, 206), rgb(16, 89, 1) ,rgb(206, 251, 206) )",
     padding: "12px 20px",
     left: 0,
     right: 0,
     top: 10,
-    margin: "10px 10%",
+    margin: "10px 10px",
     height: "64px",
     position: "sticky",
-    border: "1px solid darkblue" ,
+    // border: "1px solid orange" ,
     display: "relative",
     alignItems: "center",
+    borderTop:"2px solid rgb(21, 85, 2)",
+    borderBottom: "2px solid rgb(21, 85, 2) ",
     borderRadius: "10px",
     }
 
