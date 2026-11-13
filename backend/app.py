@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from flask import Flask, request
 from flask_cors import CORS
 
@@ -365,7 +364,26 @@ def getUpdates():
 
     return(result)
 
+@app.route("/auth",methods=["GET"])
+def authenticate():
+    print("authenticating the user")
 
+    user_details = request.get_json()
+
+    name = (user_details.get("name").strip())
+    password = (user_details.get("user_password").strip())
+    email = (user_details.get("email").strip())
+
+    
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute(
+        """
+            INSERT INTO users(user_name, email, user_password) VALUES (%s, %s, %s)
+        """,(name, email, password)
+    )
+    return()
+   
 
 if __name__ == "__main__":
     app.run(debug=True)
