@@ -21,7 +21,7 @@ const buttonStyle = {
 }
 
 const formStyle = {
-    background: "linear-gradient(90deg,rgb(206, 251, 206), rgb(16, 89, 1) ,rgb(206, 251, 206) )",
+    background: "linear-gradient(20deg,rgb(199, 211, 250), rgb(25, 0, 252)70%)",
     padding: "12px 20px",
     left: 0,
     right: 0,
@@ -29,19 +29,19 @@ const formStyle = {
     margin: "10px 10px",
     height: "64px",
     position: "sticky",
-    // border: "1px solid orange" ,
-    display: "relative",
+    //border: "1px solid orange" ,
+    display: "absolute",
     alignItems: "center",
-    borderTop:"2px solid rgb(21, 85, 2)",
-    borderBottom: "2px solid rgb(21, 85, 2) ",
+    borderTop:"2px solid rgb(1, 5, 0)",
+    borderBottom: "2px solid rgb(0, 1, 0) ",
     borderRadius: "10px",
     }
 
 const Auth = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
     
+
 
     return (
         <>
@@ -53,9 +53,16 @@ const Auth = () => {
             <hr />  
        
             <form style={formStyle}>
-                <input type="text" placeholder="Name"></input>
-                <input type="text" placeholder="Email address"></input>
-                <input type="text" placeholder="Password"></input>
+                <input type="text" 
+                placeholder="User Name" 
+                ></input>
+                <input type="text" 
+                placeholder="Email Address"
+                ></input>
+                <input type="text"
+                placeholder="Password"
+                ></input>
+                <button onClick={handleClick}>login</button>
             </form>
         </div>
         </>
