@@ -40,8 +40,9 @@ const formStyle = {
 const Auth = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    
-
+    const [Name, setName] = useState("");
+    const [Email, setEmail] = useState("");
+    const [Password, setPassword] = useState("");
 
     return (
         <>
@@ -55,13 +56,22 @@ const Auth = () => {
             <form style={formStyle}>
                 <input type="text" 
                 placeholder="User Name" 
-                ></input>
+                value={Name}
+                onChange={(e) => {
+                        setName(e.target.value);}
+                        }></input>
                 <input type="text" 
                 placeholder="Email Address"
-                ></input>
+                value={Email}
+                onChange={(e) => {
+                        setEmail(e.target.value);}
+                        }></input>
                 <input type="text"
                 placeholder="Password"
-                ></input>
+                value={Password}
+                onChange={(e) => {
+                        setPassword(e.target.value);}
+                        }></input>
                 <button onClick={handleClick}>login</button>
             </form>
         </div>
