@@ -44,6 +44,38 @@ const Auth = () => {
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
 
+     const handleClick = () => {
+
+        async function handleLogin() {
+            const login_credentials = {
+                name: Name,
+                email: Email,
+                password: Password,
+            }
+
+            try {
+                setIsLoading(true);
+                const response = await fetch("http://localhost:3000/api/auth/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(login_credentials),
+
+                });
+                const data = await response.json();
+                setIsLoading(false);
+                if (data.token) {
+                    localStorage.setItem("token", data.token);
+                    setIsLoggedIn(true);
+                }
+            } catch (error) {
+                setIsLoading(false);
+                console.error("Error logging in:", error);
+            }
+        }
+
+
     return (
         <>
         <Hero />
