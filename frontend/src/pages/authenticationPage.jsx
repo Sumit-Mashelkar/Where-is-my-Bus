@@ -1,7 +1,6 @@
 // auth page
 import Hero from "../components/header";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
 
 
 const divStyle = {
@@ -38,74 +37,83 @@ const formStyle = {
     }
 
 const Auth = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [Name, setName] = useState("");
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
+    const [message, setMessage] = useState("");
 
-     const handleClick = () => {
+    const handleLogin = async (event) => {
+        event.preventDefault();
+        setMessage("");
 
-        async function handleLogin() {
-            const login_credentials = {
-                name: Name,
-                email: Email,
-                password: Password,
-            }
-
-            try {
-                setIsLoading(true);
-                const response = await fetch("http://localhost:3000/api/auth/login", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(login_credentials),
-
-                });
-                const data = await response.json();
-                setIsLoading(false);
-                if (data.token) {
-                    localStorage.setItem("token", data.token);
-                    setIsLoggedIn(true);
-                }
-            } catch (error) {
-                setIsLoading(false);
-                console.error("Error logging in:", error);
-            }
+        try {
+            setIsLoading(true);
+            const response = await fetch("http://localhost:5000/auth", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: Name,
+                    email: Email,
+                    password: Password,
+                }),
+            });
+            const data = await response.json();
+            setMessage(data.message || data.error || "Unable to create account.");
+        } catch (error) {
+            console.error("Error creating account:", error);
+            setMessage("Unable to reach the server. Please try again.");
+        } finally {
+            setIsLoading(false);
         }
+    };
 
 
     return (
         <>
         <Hero />
-        <h2>auth page</h2>
+        <h2>Create account</h2>
         <div style={divStyle}>
             <button style={buttonStyle}>Log in with Google</button>
             
             <hr />  
        
-            <form style={formStyle}>
+            <form style={formStyle}
+            onSubmit={handleLogin}>
                 <input type="text" 
-                placeholder="User Name" 
+                placeholder="User Name"
+                aria-label="User name"
+                maxLength={30}
+                required
                 value={Name}
                 onChange={(e) => {
                         setName(e.target.value);}
                         }></input>
-                <input type="text" 
+                <input type="email"
                 placeholder="Email Address"
+                aria-label="Email address"
+                maxLength={40}
+                required
                 value={Email}
                 onChange={(e) => {
                         setEmail(e.target.value);}
                         }></input>
-                <input type="text"
+                <input type="password"
                 placeholder="Password"
+                aria-label="Password"
+                maxLength={40}
+                required
                 value={Password}
                 onChange={(e) => {
                         setPassword(e.target.value);}
                         }></input>
-                <button onClick={handleClick}>login</button>
+                <button type="submit" disabled={isLoading}>
+                    {isLoading ? "Creating account..." : "Create account"}
+                </button>
             </form>
+            {message && <p role="status">{message}</p>}
         </div>
         </>
     ) 
