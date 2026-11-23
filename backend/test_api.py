@@ -7,6 +7,61 @@ class ApiTests(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
 
+    @patch("app.get_connection")
+    def test_auth_creates_account_and_returns_valid_response(self, get_connection):
+        connection = Mock()
+        connection.__enter__ = Mock(return_value=connection)
+        connection.__exit__ = Mock(return_value=False)
+        connection.execute.return_value.fetchone.return_value = (1,)
+        get_connection.return_value = connection
+
+        response = self.client.post(
+            "/auth",
+            json={
+                "name": "Transit User",
+                "email": "transit@example.com",
+                "password": "secure-password",
+            },
+        )
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.json, {"message": "Account created successfully"})
+        self.assertEqual(
+            connection.execute.call_args.args[1],
+            ("Transit User", "transit@example.com", "secure-password"),
+        )
+
+    @patch("app.get_connection")
+    def test_auth_rejects_missing_fields(self, get_connection):
+        response = self.client.post("/auth", json={"email": "transit@example.com"})
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(
+            response.json["fields"],
+            ["name", "password"],
+        )
+        get_connection.assert_not_called()
+
+    @patch("app.get_connection")
+    def test_auth_rejects_duplicate_account(self, get_connection):
+        connection = Mock()
+        connection.__enter__ = Mock(return_value=connection)
+        connection.__exit__ = Mock(return_value=False)
+        connection.execute.return_value.fetchone.return_value = None
+        get_connection.return_value = connection
+
+        response = self.client.post(
+            "/auth",
+            json={
+                "name": "Transit User",
+                "email": "transit@example.com",
+                "password": "secure-password",
+            },
+        )
+
+        self.assertEqual(response.status_code, 409)
+        self.assertIn("already in use", response.json["error"])
+
     def test_search_returns_matching_buses(self):
         response = self.client.post(
             "/search",

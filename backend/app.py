@@ -364,25 +364,37 @@ def getUpdates():
 
     return(result)
 
-@app.route("/auth",methods=["GET"])
+@app.route("/auth",methods=["POST"])
 def authenticate():
-    print("authenticating the user")
+    user_details = request.get_json(silent=True) or {}
+    required_fields = ("name", "email", "password")
+    values = {
+        field: str(user_details.get(field) or "").strip()
+        for field in required_fields
+    }
+    missing_fields = [field for field, value in values.items() if not value]
 
-    user_details = request.get_json()
+    if missing_fields:
+        return {"error": "Missing required fields", "fields": missing_fields}, 400
 
-    name = (user_details.get("name").strip())
-    password = (user_details.get("user_password").strip())
-    email = (user_details.get("email").strip())
+    if len(values["name"]) > 30 or len(values["email"]) > 40 or len(values["password"]) > 40:
+        return {"error": "One or more fields exceed the maximum length"}, 400
 
-    
-    connection = get_connection()
-    cursor = connection.cursor()
-    cursor.execute(
-        """
-            INSERT INTO users(user_name, email, user_password) VALUES (%s, %s, %s)
-        """,(name, email, password)
-    )
-    return()
+    with get_connection() as connection:
+        user = connection.execute(
+            """
+            INSERT INTO users (username, email, user_password)
+            VALUES (%s, %s, %s)
+            ON CONFLICT DO NOTHING
+            RETURNING id
+            """,
+            (values["name"], values["email"], values["password"]),
+        ).fetchone()
+
+    if not user:
+        return {"error": "The account could not be created because an email or password is already in use"}, 409
+
+    return {"message": "Account created successfully"}, 201
    
 
 if __name__ == "__main__":
